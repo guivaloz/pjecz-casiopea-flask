@@ -128,8 +128,8 @@
         {% if rol.estatus == 'A' %}{{ modals.custom_javascript_delete('Eliminar', '¿Eliminar a ' + rol.nombre + '?') }}{% endif %}
         {% if rol.estatus == 'B' %}{{ modals.custom_javascript_recover('Recuperar', '¿Recuperar a ' + rol.nombre + '?') }}{% endif %}
     {% endif %}
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
     </script>
@@ -137,7 +137,7 @@
         <script>
             // DataTable Permisos
             let configDTPermisos = constructorDataTable.config();
-            configDTPermisos['ajax']['url'] = '/permisos/datatable_json';
+            configDTPermisos['ajax']['url'] = '{{ url_for("permisos.datatable_json") }}';
             configDTPermisos['ajax']['data'] = { 'estatus': "A", 'rol_id': "{{ rol.id }}" };
             configDTPermisos['columns'] = [
                 { data: "detalle" },
@@ -176,7 +176,7 @@
         <script>
             // DataTable UsuariosRoles
             let configDTUsuariosRoles = constructorDataTable.config();
-            configDTUsuariosRoles['ajax']['url'] = '/usuarios_roles/datatable_json';
+            configDTUsuariosRoles['ajax']['url'] = '{{ url_for("usuarios_roles.datatable_json") }}';
             configDTUsuariosRoles['ajax']['data'] = { 'estatus': "A", 'rol_id': "{{ rol.id }}" };
             configDTUsuariosRoles['columns'] = [
                 { data: "detalle" },

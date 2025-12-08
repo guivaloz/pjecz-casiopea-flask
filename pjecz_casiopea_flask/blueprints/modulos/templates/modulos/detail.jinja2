@@ -50,14 +50,14 @@
         {% if modulo.estatus == 'A' %}{{ modals.custom_javascript_delete('Eliminar', '¿Eliminar a ' + modulo.nombre + '?') }}{% endif %}
         {% if modulo.estatus == 'B' %}{{ modals.custom_javascript_recover('Recuperar', '¿Recuperar a ' + modulo.nombre + '?') }}{% endif %}
     {% endif %}
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     {% if current_user.can_view('PERMISOS') %}
         <script>
             // DataTable Permisos
             const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
             let configDTPermisos = constructorDataTable.config();
-            configDTPermisos['ajax']['url'] = '/permisos/datatable_json';
+            configDTPermisos['ajax']['url'] = '{{ url_for("permisos.datatable_json") }}';
             configDTPermisos['ajax']['data'] = { 'estatus': "A", 'modulo_id': "{{ modulo.id }}" };
             configDTPermisos['columns'] = [
                 { data: "detalle" },

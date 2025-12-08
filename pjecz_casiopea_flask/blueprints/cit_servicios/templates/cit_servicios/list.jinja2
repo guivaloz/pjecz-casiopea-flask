@@ -64,13 +64,13 @@
 
 {% block custom_javascript %}
     <!-- Datatables -->
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         // DataTable CitServicios
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
         let configDTCitServicios = constructorDataTable.config();
-        configDTCitServicios['ajax']['url'] = '/cit_servicios/datatable_json';
+        configDTCitServicios['ajax']['url'] = '{{ url_for("cit_servicios.datatable_json") }}';
         configDTCitServicios['ajax']['data'] = {{ filtros }};
         configDTCitServicios['columns'] = [
             { data: 'detalle' },
@@ -138,7 +138,7 @@
         filtrosCitServicios.precargar();
     </script>
     <!-- Datatables botones toggle_es_activo -->
-    <script src="/static/js/datatables-toggles.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-toggles.js') }}"></script>
     <script>
         // Preparar headers para POST
         const myHeaders = new Headers();

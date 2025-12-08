@@ -60,13 +60,13 @@
 
 {% block custom_javascript %}
     <!-- Datatables -->
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         // DataTable PagTramitesServicios
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
         let configDTPagTramitesServicios = constructorDataTable.config();
-        configDTPagTramitesServicios['ajax']['url'] = '/pag_tramites_servicios/datatable_json';
+        configDTPagTramitesServicios['ajax']['url'] = '{{ url_for("pag_tramites_servicios.datatable_json") }}';
         configDTPagTramitesServicios['ajax']['data'] = {{ filtros }};
         configDTPagTramitesServicios['columns'] = [
             { data: 'detalle' },
@@ -127,7 +127,7 @@
         filtrosPagTramitesServicios.precargar();
     </script>
     <!-- Datatables botones toggle_es_activo -->
-    <script src="/static/js/datatables-toggles.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-toggles.js') }}"></script>
     <script>
         // Preparar headers para POST
         const myHeaders = new Headers();

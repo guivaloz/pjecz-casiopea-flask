@@ -2,7 +2,7 @@
 Sistemas
 """
 
-from flask import Blueprint, redirect, render_template, send_from_directory
+from flask import Blueprint, redirect, render_template, send_from_directory, url_for
 from flask_login import current_user
 
 sistemas = Blueprint("sistemas", __name__, template_folder="templates")
@@ -18,7 +18,7 @@ def start():
         return render_template("sistemas/start.jinja2")
 
     # No está autenticado, debe de iniciar sesión
-    return redirect("/login")
+    return redirect(url_for("usuarios.login"))
 
 
 @sistemas.route("/favicon.ico")

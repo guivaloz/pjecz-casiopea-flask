@@ -201,8 +201,8 @@
         {% if oficina.estatus == 'B' %}{{ modals.custom_javascript_recover('Recuperar', '¿Recuperar a ' + oficina.clave + '?') }}{% endif %}
     {% endif %}
     <!-- DataTables -->
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
     </script>
@@ -210,7 +210,7 @@
         <script>
             // DataTable CitCitas
             let configDTCitCitas = constructorDataTable.config();
-            configDTCitCitas['ajax']['url'] = '/cit_citas/datatable_json';
+            configDTCitCitas['ajax']['url'] = '{{ url_for("cit_citas.datatable_json") }}';
             configDTCitCitas['ajax']['data'] = { 'estatus': "A", 'oficina_id': "{{ oficina.id }}" };
             configDTCitCitas['columns'] = [
                 { data: "detalle" },
@@ -301,7 +301,7 @@
         <script>
             // DataTable CitHorasBloqueadas
             let configDTCitHorasBloqueadas = constructorDataTable.config();
-            configDTCitHorasBloqueadas['ajax']['url'] = '/cit_horas_bloqueadas/datatable_json';
+            configDTCitHorasBloqueadas['ajax']['url'] = '{{ url_for("cit_horas_bloqueadas.datatable_json") }}';
             configDTCitHorasBloqueadas['ajax']['data'] = { 'estatus': "A", 'oficina_id': "{{ oficina.id }}" };
             configDTCitHorasBloqueadas['columns'] = [
                 { data: 'detalle' },
@@ -338,7 +338,7 @@
         <script>
             // DataTable CitOficinasServicios
             let configDTCitOficinasServicios = constructorDataTable.config();
-            configDTCitOficinasServicios['ajax']['url'] = '/cit_oficinas_servicios/datatable_json';
+            configDTCitOficinasServicios['ajax']['url'] = '{{ url_for("cit_oficinas_servicios.datatable_json") }}';
             configDTCitOficinasServicios['ajax']['data'] = { 'estatus': "A", 'oficina_id': "{{ oficina.id }}" };
             configDTCitOficinasServicios['columns'] = [
                 { data: 'detalle' },
@@ -413,7 +413,7 @@
         <script>
             // DataTable Usuarios-Oficinas
             let configDTUsuariosOficinas = constructorDataTable.config();
-            configDTUsuariosOficinas['ajax']['url'] = '/usuarios_oficinas/datatable_json';
+            configDTUsuariosOficinas['ajax']['url'] = '{{ url_for("usuarios_oficinas.datatable_json") }}';
             configDTUsuariosOficinas['ajax']['data'] = { 'estatus': "A", 'oficina_id': "{{ oficina.id }}" };
             configDTUsuariosOficinas['columns'] = [
                 { data: 'detalle' },
@@ -453,7 +453,7 @@
         </script>
     {% endif %}
     <!-- Datatables botones toggle_es_activo -->
-    <script src="/static/js/datatables-toggles.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-toggles.js') }}"></script>
     <script>
         // Preparar headers para POST
         const myHeaders = new Headers();

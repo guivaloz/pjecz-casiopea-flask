@@ -74,13 +74,13 @@
 
 {% block custom_javascript %}
     <!-- DataTables -->
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         // DataTable PagPagos
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
         let configDTPagPagos = constructorDataTable.config();
-        configDTPagPagos['ajax']['url'] = '/pag_pagos/datatable_json';
+        configDTPagPagos['ajax']['url'] = '{{ url_for("pag_pagos.datatable_json") }}';
         configDTPagPagos['ajax']['data'] = {{ filtros }};
         configDTPagPagos['columns'] = [
             { data: 'detalle' },

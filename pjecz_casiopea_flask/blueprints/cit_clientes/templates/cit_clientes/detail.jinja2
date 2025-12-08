@@ -76,8 +76,8 @@
         {% if cit_cliente.estatus == 'B' %}{{ modals.custom_javascript_recover('Recuperar', '¿Recuperar a ' + cit_cliente.email + '?') }}{% endif %}
     {% endif %}
     <!-- DataTables -->
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
     </script>
@@ -85,7 +85,7 @@
         <script>
             // DataTable CitCitas
             let configDTCitCitas = constructorDataTable.config();
-            configDTCitCitas['ajax']['url'] = '/cit_citas/datatable_json';
+            configDTCitCitas['ajax']['url'] = '{{ url_for("cit_citas.datatable_json") }}';
             configDTCitCitas['ajax']['data'] = { 'estatus': "A", 'cit_cliente_id': "{{ cit_cliente.id }}" };
             configDTCitCitas['columns'] = [
                 { data: "detalle" },
@@ -154,7 +154,7 @@
         <script>
             // DataTable PagPagos
             let configDTPagPagos = constructorDataTable.config();
-            configDTPagPagos['ajax']['url'] = '/pag_pagos/datatable_json';
+            configDTPagPagos['ajax']['url'] = '{{ url_for("pag_pagos.datatable_json") }}';
             configDTPagPagos['ajax']['data'] = { 'estatus': "A", 'cit_cliente_id': "{{ cit_cliente.id }}" };
             configDTPagPagos['columns'] = [
                 { data: 'detalle' },

@@ -73,8 +73,8 @@
         {% if usuario.estatus == 'B' %}{{ modals.custom_javascript_recover('Recuperar', '¿Recuperar a ' + usuario.nombre + '?') }}{% endif %}
     {% endif %}
     <!-- Constructor de DataTables -->
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
     </script>
@@ -82,7 +82,7 @@
         <script>
             // DataTable UsuariosRoles
             let configDTUsuariosRoles = constructorDataTable.config();
-            configDTUsuariosRoles['ajax']['url'] = '/usuarios_roles/datatable_json';
+            configDTUsuariosRoles['ajax']['url'] = '{{ url_for("usuarios_roles.datatable_json") }}';
             configDTUsuariosRoles['ajax']['data'] = { 'estatus': "A", 'usuario_id': "{{ usuario.id }}" };
             configDTUsuariosRoles['columns'] = [
                 { data: "detalle" },

@@ -58,13 +58,13 @@
 {% endblock %}
 
 {% block custom_javascript %}
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         // DataTable WebRamas
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
         let configDTWebRamas = constructorDataTable.config();
-        configDTWebRamas['ajax']['url'] = '/web_ramas/datatable_json';
+        configDTWebRamas['ajax']['url'] = '{{ url_for("web_ramas.datatable_json") }}';
         configDTWebRamas['ajax']['data'] = {{ filtros }};
         configDTWebRamas['columns'] = [
             { data: 'detalle' },

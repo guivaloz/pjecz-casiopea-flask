@@ -86,14 +86,14 @@
         {% if autoridad.estatus == 'B' %}{{ modals.custom_javascript_recover('Recuperar', '¿Recuperar a ' + autoridad.clave + '?') }}{% endif %}
     {% endif %}
     <!-- DataTables -->
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     {% if current_user.can_view('USUARIOS') %}
         <script>
             // DataTable usuarios
             const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
             let configDTUsuarios = constructorDataTable.config();
-            configDTUsuarios['ajax']['url'] = '/usuarios/datatable_json';
+            configDTUsuarios['ajax']['url'] = '{{ url_for("usuarios.datatable_json") }}';
             configDTUsuarios['ajax']['data'] = { 'estatus': "A", 'autoridad_id': "{{ autoridad.id }}" };
             configDTUsuarios['columns'] = [
                 { data: "detalle" },
