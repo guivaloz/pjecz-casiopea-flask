@@ -87,14 +87,14 @@
         {% if web_rama.estatus == 'A' %}{{ modals.custom_javascript_delete('Eliminar', '¿Eliminar a ' + web_rama.clave + '?') }}{% endif %}
         {% if web_rama.estatus == 'B' %}{{ modals.custom_javascript_recover('Recuperar', '¿Recuperar a ' + web_rama.clave + '?') }}{% endif %}
     {% endif %}
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     {% if current_user.can_view('WEB PAGINAS') %}
         <script>
             // DataTable WebPaginas
             const constructorDataTable = new ConfigDataTable('{{ csrf_token() }}');
             let configDTWebPaginas = constructorDataTable.config();
-            configDTWebPaginas['ajax']['url'] = '/web_paginas/datatable_json';
+            configDTWebPaginas['ajax']['url'] = '{{ url_for("web_paginas.datatable_json") }}';
             configDTWebPaginas['ajax']['data'] = { estatus: "A", web_rama_id: '{{ web_rama.id }}' };
             configDTWebPaginas['columns'] = [
                 { data: 'detalle' },

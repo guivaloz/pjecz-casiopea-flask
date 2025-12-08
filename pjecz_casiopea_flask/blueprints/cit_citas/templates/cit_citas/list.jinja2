@@ -70,13 +70,13 @@
 {% endblock %}
 
 {% block custom_javascript %}
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         // DataTable CitCitas
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
         let configDTCitCitas = constructorDataTable.config();
-        configDTCitCitas['ajax']['url'] = '/cit_citas/datatable_json';
+        configDTCitCitas['ajax']['url'] = '{{ url_for("cit_citas.datatable_json") }}';
         configDTCitCitas['ajax']['data'] = {{ filtros }};
         configDTCitCitas['columns'] = [
             { data: "detalle" },

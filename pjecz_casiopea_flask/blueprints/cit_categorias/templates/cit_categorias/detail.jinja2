@@ -79,14 +79,14 @@
         {% if cit_categoria.estatus == 'B' %}{{ modals.custom_javascript_recover('Recuperar', '¿Recuperar a ' + cit_categoria.nombre + '?') }}{% endif %}
     {% endif %}
     <!-- DataTables -->
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     {% if current_user.can_view('CIT SERVICIOS') %}
         <script>
             // DataTable CitServicios
             const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
             let configDTCitServicios = constructorDataTable.config();
-            configDTCitServicios['ajax']['url'] = '/cit_servicios/datatable_json';
+            configDTCitServicios['ajax']['url'] = '{{ url_for("cit_servicios.datatable_json") }}';
             configDTCitServicios['ajax']['data'] = { 'estatus': "A", 'cit_categoria_id': "{{ cit_categoria.id }}" };
             configDTCitServicios['columns'] = [
                 { data: 'detalle' },
@@ -145,7 +145,7 @@
         </script>
     {% endif %}
     <!-- Datatables botones toggle_es_activo -->
-    <script src="/static/js/datatables-toggles.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-toggles.js') }}"></script>
     <script>
         // Preparar headers para POST
         const myHeaders = new Headers();

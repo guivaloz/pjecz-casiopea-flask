@@ -60,13 +60,13 @@
 
 {% block custom_javascript %}
     <!-- DataTables -->
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         // DataTable Bitácoras
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
         let configDTBitacoras = constructorDataTable.config();
-        configDTBitacoras['ajax']['url'] = '/bitacoras/datatable_json';
+        configDTBitacoras['ajax']['url'] = '{{ url_for("bitacoras.datatable_json") }}';
         configDTBitacoras['ajax']['data'] = {{ filtros }};
         configDTBitacoras['columns'] = [
             { data: "creado" },

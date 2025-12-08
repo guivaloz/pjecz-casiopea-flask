@@ -42,10 +42,10 @@ def login():
     form = AccesoForm(siguiente=request.args.get("siguiente"))
     if form.validate_on_submit():
         # Tomar valores del formulario
-        identidad = request.form.get("identidad")
-        contrasena = request.form.get("contrasena")
-        token = request.form.get("token")
-        siguiente_url = request.form.get("siguiente")
+        identidad = str(request.form.get("identidad"))
+        contrasena = str(request.form.get("contrasena"))
+        token = str(request.form.get("token"))
+        siguiente_url = str(request.form.get("siguiente"))
         # Si esta definida la variable de entorno FIREBASE_APIKEY
         if firebase_settings.APIKEY != "":
             # Entonces debe ingresar con Google/Microsoft/GitHub

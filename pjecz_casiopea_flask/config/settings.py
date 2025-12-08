@@ -16,8 +16,10 @@ class Settings(BaseSettings):
     """Settings"""
 
     # Variables de entorno
+    ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")
     FERNET_KEY: str = os.getenv("FERNET_KEY", "")
     HOST: str = os.getenv("HOST", "")
+    PREFIX: str = os.getenv("PREFIX", "")
     REDIS_HOST: str = os.getenv("REDIS_HOST", "127.0.0.1")
     REDIS_PORT: str = os.getenv("REDIS_PORT", "6379")
     SALT: str = os.getenv("SALT", "")

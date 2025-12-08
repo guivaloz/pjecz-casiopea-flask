@@ -88,14 +88,14 @@
         {% if pag_tramite_servicio.estatus == 'B' %}{{ modals.custom_javascript_recover('Recuperar', '¿Recuperar a ' + pag_tramite_servicio.clave + '?') }}{% endif %}
     {% endif %}
     <!-- DataTables -->
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     {% if current_user.can_view('PAG PAGOS') %}
         <script>
             // DataTable PagPagos
             const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
             let configDTPagPagos = constructorDataTable.config();
-            configDTPagPagos['ajax']['url'] = '/pag_pagos/datatable_json';
+            configDTPagPagos['ajax']['url'] = '{{ url_for("pag_pagos.datatable_json") }}';
             configDTPagPagos['ajax']['data'] = { 'estatus': "A", 'pag_tramite_servicio_id': "{{ pag_tramite_servicio.id }}" };
             configDTPagPagos['columns'] = [
                 { data: 'detalle' },

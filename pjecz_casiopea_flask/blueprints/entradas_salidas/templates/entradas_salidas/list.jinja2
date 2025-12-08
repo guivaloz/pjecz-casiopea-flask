@@ -54,13 +54,13 @@
 
 {% block custom_javascript %}
     <!-- DataTables -->
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         // DataTable entradas_salidas
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
         let configDTEntradasSalidas = constructorDataTable.config();
-        configDTEntradasSalidas['ajax']['url'] = '/entradas_salidas/datatable_json';
+        configDTEntradasSalidas['ajax']['url'] = '{{ url_for("entradas_salidas.datatable_json") }}';
         configDTEntradasSalidas['ajax']['data'] = {{ filtros }};
         configDTEntradasSalidas['columns'] = [
             { data: "creado" },

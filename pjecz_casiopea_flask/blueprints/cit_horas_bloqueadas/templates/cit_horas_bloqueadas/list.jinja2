@@ -50,13 +50,13 @@
 {% endblock %}
 
 {% block custom_javascript %}
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         // DataTable CitHorasBloqueadas
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
         let configDTCitHorasBloqueadas = constructorDataTable.config();
-        configDTCitHorasBloqueadas['ajax']['url'] = '/cit_horas_bloqueadas/datatable_json';
+        configDTCitHorasBloqueadas['ajax']['url'] = '{{ url_for("cit_horas_bloqueadas.datatable_json") }}';
         configDTCitHorasBloqueadas['ajax']['data'] = {{ filtros }};
         configDTCitHorasBloqueadas['columns'] = [
             { data: 'detalle' },

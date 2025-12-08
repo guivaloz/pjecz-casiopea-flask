@@ -37,13 +37,13 @@
 {% endblock %}
 
 {% block custom_javascript %}
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         // DataTable Usuarios-Oficinas
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
         let configDTUsuariosOficinas = constructorDataTable.config();
-        configDTUsuariosOficinas['ajax']['url'] = '/usuarios_oficinas/datatable_json';
+        configDTUsuariosOficinas['ajax']['url'] = '{{ url_for("usuarios_oficinas.datatable_json") }}';
         configDTUsuariosOficinas['ajax']['data'] = {{ filtros }};
         configDTUsuariosOficinas['columns'] = [
             { data: 'detalle' },

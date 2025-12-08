@@ -31,13 +31,13 @@
 
 {% block custom_javascript %}
     <!-- DataTables -->
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         // DataTable Tareas
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
         let configDTTareas = constructorDataTable.config();
-        configDTTareas['ajax']['url'] = '/tareas/datatable_json';
+        configDTTareas['ajax']['url'] = '{{ url_for("tareas.datatable_json") }}';
         configDTTareas['ajax']['data'] = {{ filtros }};
         configDTTareas['columns'] = [
             { data: 'detalle' },

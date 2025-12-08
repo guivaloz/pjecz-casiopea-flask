@@ -48,13 +48,13 @@
 {% endblock %}
 
 {% block custom_javascript %}
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         // DataTable Cit Días Inhábiles
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
         let configDTCitDiasInhabiles = constructorDataTable.config();
-        configDTCitDiasInhabiles['ajax']['url'] = '/cit_dias_inhabiles/datatable_json';
+        configDTCitDiasInhabiles['ajax']['url'] = '{{ url_for("cit_dias_inhabiles.datatable_json") }}';
         configDTCitDiasInhabiles['ajax']['data'] = {{ filtros }};
         configDTCitDiasInhabiles['columns'] = [
             { data: 'detalle' },

@@ -74,6 +74,8 @@ class Usuario(database.Model, UserMixin, UniversalMixin):
                         and permiso.nivel > 0
                         and permiso.modulo.en_navegacion
                     ):
+                        if current_app.config["ENVIRONMENT"].lower() == "production" and current_app.config["PREFIX"]:
+                            permiso.modulo.ruta = f"{current_app.config['PREFIX']}{permiso.modulo.ruta}"
                         modulos.append(permiso.modulo)
                         modulos_nombres.append(permiso.modulo.nombre)
         self.modulos_menu_principal_consultados = sorted(modulos, key=lambda x: x.nombre_corto)

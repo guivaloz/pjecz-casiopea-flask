@@ -61,13 +61,13 @@
 
 {% block custom_javascript %}
     <!-- Datatables -->
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         // DataTable Materias
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
         let configDTMaterias = constructorDataTable.config();
-        configDTMaterias['ajax']['url'] = '/materias/datatable_json';
+        configDTMaterias['ajax']['url'] = '{{ url_for("materias.datatable_json") }}';
         configDTMaterias['ajax']['data'] = {{ filtros }};
         configDTMaterias['columns'] = [
             { data: 'detalle' },

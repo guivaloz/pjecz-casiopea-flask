@@ -68,13 +68,13 @@
 {% endblock %}
 
 {% block custom_javascript %}
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         // DataTable usuarios
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
         let configDTUsuarios = constructorDataTable.config();
-        configDTUsuarios['ajax']['url'] = '/usuarios/datatable_json';
+        configDTUsuarios['ajax']['url'] = '{{ url_for("usuarios.datatable_json") }}';
         configDTUsuarios['ajax']['data'] = {{ filtros }};
         configDTUsuarios['columns'] = [
             { data: "detalle" },

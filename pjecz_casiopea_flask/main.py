@@ -5,6 +5,7 @@ PJECZ Casiopea Flask
 from flask import Flask
 from redis import Redis
 from rq import Queue
+from werkzeug.wrappers import Response
 
 from .blueprints.autoridades.views import autoridades
 from .blueprints.bitacoras.views import bitacoras
@@ -39,14 +40,31 @@ from .blueprints.web_ramas.views import web_ramas
 from .config.extensions import authentication, csrf, database, login_manager, moment
 from .config.settings import Settings
 
+
+# Clase para interceptar las peticiones para que en producción se inyecte el prefijo PREFIX
+class PrefixMiddleware:
+    def __init__(self, app, prefix=""):
+        self.app = app
+        self.prefix = prefix
+
+    def __call__(self, environ, start_response):
+        if environ["PATH_INFO"].startswith(self.prefix):
+            environ["PATH_INFO"] = environ["PATH_INFO"][len(self.prefix) :]
+            environ["SCRIPT_NAME"] = self.prefix
+            return self.app(environ, start_response)
+        else:
+            res = Response("Not Found", status=404)
+            return res(environ, start_response)
+
+
 # Crear la aplicación
 app = Flask(__name__, instance_relative_config=True)
 app.add_url_rule("/favicon.ico", endpoint="sistemas.favicon")
 app.config.from_object(Settings())
 
-# Inicializar conexión a Redis
-redis_client = Redis(host=app.config["REDIS_HOST"], port=app.config["REDIS_PORT"])
-task_queue = Queue(name=app.config["TASK_QUEUE_NAME"], connection=redis_client)
+# Aplicar el middleware de prefijo en producción
+if app.config["ENVIRONMENT"].lower() == "production" and app.config["PREFIX"]:
+    app.wsgi_app = PrefixMiddleware(app.wsgi_app, prefix=app.config["PREFIX"])
 
 # Cargar las vistas
 app.register_blueprint(autoridades)
@@ -87,3 +105,7 @@ moment.init_app(app)
 
 # Cargar el modelo de usuario para la autenticación
 authentication(Usuario)
+
+# Inicializar conexión a Redis
+redis_client = Redis(host=app.config["REDIS_HOST"], port=app.config["REDIS_PORT"])
+task_queue = Queue(name=app.config["TASK_QUEUE_NAME"], connection=redis_client)

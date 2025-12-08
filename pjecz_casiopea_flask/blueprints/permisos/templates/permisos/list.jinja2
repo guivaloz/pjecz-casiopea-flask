@@ -73,13 +73,13 @@
 
 {% block custom_javascript %}
     <!-- DataTables -->
-    <script src="/static/js/datatables-constructor.js"></script>
-    <script src="/static/js/datatables-filtros.js"></script>
+    <script src="{{ url_for('static', filename='js/datatables-constructor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-filtros.js') }}"></script>
     <script>
         // DataTable Permisos
         const constructorDataTable = new ConfigDataTable( '{{ csrf_token() }}' );
         let configDTPermisos = constructorDataTable.config();
-        configDTPermisos['ajax']['url'] = '/permisos/datatable_json';
+        configDTPermisos['ajax']['url'] = '{{ url_for("permisos.datatable_json") }}';
         configDTPermisos['ajax']['data'] = {{ filtros }};
         configDTPermisos['columns'] = [
             { data: "detalle" },
