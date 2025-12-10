@@ -30,7 +30,7 @@
         <div class="row h-100">
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
                 {% call navigation.menu(usuario_email=current_user.email) %}
-                    {{ navigation.menu_option('Inicio', url_for('sistemas.start'), 'mdi:view-dashboard') }}
+                    {{ navigation.menu_option('Inicio', url_for('sistemas.start'), 'mdi:view-home') }}
                     {% for modulo in current_user.modulos_menu_principal %}
                         {{ navigation.menu_option(modulo.nombre_corto, modulo.ruta, modulo.icono) }}
                     {% endfor %}
