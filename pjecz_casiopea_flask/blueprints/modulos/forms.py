@@ -12,7 +12,7 @@ class ModuloForm(FlaskForm):
 
     nombre = StringField("Nombre", validators=[DataRequired(), Length(max=256)])
     nombre_corto = StringField("Nombre en menú", validators=[DataRequired(), Length(max=64)])
-    icono = StringField("Icono", validators=[DataRequired(), Length(max=48)], default="mdi:folder")
+    icono = StringField("Icono", validators=[DataRequired(), Length(max=48)], default="mdi mdi-folder")
     ruta = StringField("Ruta (comienza con /)", validators=[DataRequired(), Length(max=64)], default="/")
     en_navegacion = BooleanField("En menú de navegación", validators=[Optional()])
     guardar = SubmitField("Guardar")

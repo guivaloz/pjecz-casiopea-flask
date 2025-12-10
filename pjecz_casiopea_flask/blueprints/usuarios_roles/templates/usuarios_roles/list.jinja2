@@ -7,13 +7,13 @@
 {% block topbar_actions %}
     {% call topbar.page_buttons(titulo) %}
         {% if current_user.can_view('MODULOS') %}
-            {{ topbar.button('Módulos', url_for('modulos.list_active'), 'mdi:toy-brick') }}
+            {{ topbar.button('Módulos', url_for('modulos.list_active'), 'mdi mdi-toy-brick') }}
         {% endif %}
         {% if current_user.can_view('ROLES') %}
-            {{ topbar.button('Roles', url_for('roles.list_active'), 'mdi:gamepad') }}
+            {{ topbar.button('Roles', url_for('roles.list_active'), 'mdi mdi-gamepad') }}
         {% endif %}
         {% if current_user.can_view('USUARIOS') %}
-            {{ topbar.button('Usuarios', url_for('usuarios.list_active'), 'mdi:account-key') }}
+            {{ topbar.button('Usuarios', url_for('usuarios.list_active'), 'mdi mdi-account-key') }}
         {% endif %}
     {% endcall %}
 {% endblock %}

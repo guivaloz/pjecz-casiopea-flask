@@ -53,8 +53,8 @@
                             </div>
                         </div>
                         <div class="col-6 text-end">
-                            <button title="Buscar" class="btn btn-primary btn-lg" onclick="filtrosAutoridades.buscar(); return false;" id="button-buscar"><span class="iconify" data-icon="mdi:magnify"></span></button>
-                            <button title="Limpiar" class="btn btn-warning btn-lg" type="reset" onclick="filtrosAutoridades.limpiar();" id="button-limpiar"><span class="iconify" data-icon="mdi:broom"></span></button>
+                            <button title="Buscar" class="btn btn-primary btn-lg" onclick="filtrosAutoridades.buscar(); return false;" id="button-buscar"><span class="mdi mdi-magnify"></span></button>
+                            <button title="Limpiar" class="btn btn-warning btn-lg" type="reset" onclick="filtrosAutoridades.limpiar();" id="button-limpiar"><span class="mdi mdi-broom"></span></button>
                         </div>
                     </form>
                 </div>
@@ -91,8 +91,8 @@
                             </div>
                         </div>
                         <div class="col-6 text-end">
-                            <button title="Buscar" class="btn btn-primary btn-lg" onclick="filtrosOficinas.buscar(); return false;" id="button-buscar"><span class="iconify" data-icon="mdi:magnify"></span></button>
-                            <button title="Limpiar" class="btn btn-warning btn-lg" type="reset" onclick="filtrosOficinas.limpiar();" id="button-limpiar"><span class="iconify" data-icon="mdi:broom"></span></button>
+                            <button title="Buscar" class="btn btn-primary btn-lg" onclick="filtrosOficinas.buscar(); return false;" id="button-buscar"><span class="mdi mdi-magnify"></span></button>
+                            <button title="Limpiar" class="btn btn-warning btn-lg" type="reset" onclick="filtrosOficinas.limpiar();" id="button-limpiar"><span class="mdi mdi-broom"></span></button>
                         </div>
                     </form>
                 </div>
@@ -169,9 +169,9 @@
                         let myRow = 'autoridades_row_' + data.id;
                         let myOnClick = "toggleEsActivo('#" + myId + "', '" + data.url + "', '#" + myRow + "')";
                         if (data.es_activo === true) {
-                            return '<button id="' + myId + '" type="button" class="btn btn-sm btn-outline-primary" onclick="' + myOnClick + '"><span class="iconify" data-icon="mdi:toggle-switch"></span></button>';
+                            return '<button id="' + myId + '" type="button" class="btn btn-sm btn-outline-primary" onclick="' + myOnClick + '"><span class="mdi mdi-toggle-switch"></span></button>';
                         } else {
-                            return '<button id="' + myId + '" type="button" class="btn btn-sm btn-light" onclick="' + myOnClick + '"><span class="iconify" data-icon="mdi:toggle-switch-off"></span></button>';
+                            return '<button id="' + myId + '" type="button" class="btn btn-sm btn-light" onclick="' + myOnClick + '"><span class="mdi mdi-toggle-switch-off"></span></button>';
                         }
                     }
                 }
@@ -197,7 +197,7 @@
         <script>
             // DataTable Oficinas
             let configDTOficinas = constructorDataTable.config();
-            configDTOficinas['ajax']['url'] = '{{ url_for("cit_oficinas.datatable_json") }}';
+            configDTOficinas['ajax']['url'] = '{{ url_for("oficinas.datatable_json") }}';
             configDTOficinas['ajax']['data'] = { 'estatus': "A", 'distrito_id': "{{ distrito.id }}" };
             configDTOficinas['columns'] = [
                 { data: "detalle" },
@@ -238,9 +238,9 @@
                         let myRow = 'oficinas_row_' + data.id;
                         let myOnClick = "toggleEsActivo('#" + myId + "', '" + data.url + "', '#" + myRow + "')";
                         if (data.es_activo === true) {
-                            return '<button id="' + myId + '" type="button" class="btn btn-sm btn-outline-primary" onclick="' + myOnClick + '"><span class="iconify" data-icon="mdi:toggle-switch"></span></button>';
+                            return '<button id="' + myId + '" type="button" class="btn btn-sm btn-outline-primary" onclick="' + myOnClick + '"><span class="mdi mdi-toggle-switch"></span></button>';
                         } else {
-                            return '<button id="' + myId + '" type="button" class="btn btn-sm btn-light" onclick="' + myOnClick + '"><span class="iconify" data-icon="mdi:toggle-switch-off"></span></button>';
+                            return '<button id="' + myId + '" type="button" class="btn btn-sm btn-light" onclick="' + myOnClick + '"><span class="mdi mdi-toggle-switch-off"></span></button>';
                         }
                     }
                 }

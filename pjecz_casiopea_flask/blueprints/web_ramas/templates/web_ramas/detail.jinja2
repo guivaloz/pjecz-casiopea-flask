@@ -56,8 +56,8 @@
                             </div>
                         </div>
                         <div class="col-2 text-end">
-                            <button title="Buscar" class="btn btn-primary btn-lg" onclick="filtrosWebPaginas.buscar(); return false;" id="button-buscar"><span class="iconify" data-icon="mdi:magnify"></span></button>
-                            <button title="Limpiar" class="btn btn-warning btn-lg" type="reset" onclick="filtrosWebPaginas.limpiar();" id="button-limpiar"><span class="iconify" data-icon="mdi:broom"></span></button>
+                            <button title="Buscar" class="btn btn-primary btn-lg" onclick="filtrosWebPaginas.buscar(); return false;" id="button-buscar"><span class="mdi mdi-magnify"></span></button>
+                            <button title="Limpiar" class="btn btn-warning btn-lg" type="reset" onclick="filtrosWebPaginas.limpiar();" id="button-limpiar"><span class="mdi mdi-broom"></span></button>
                         </div>
                     </form>
                 </div>
@@ -127,9 +127,9 @@
                     data: null,
                     render: function(data, type, row, meta) {
                         if (data) {
-                            return '<span class="iconify" data-icon="mdi:checkbox-marked" style="font-size: 1.4em"></span>';
+                            return '<span class="mdi mdi-checkbox-marked" style="font-size: 1.4em"></span>';
                         }
-                        return '<span class="iconify text-secondary" data-icon="mdi:checkbox-blank-outline" style="font-size: 1.4em"></span>';
+                        return '<span class="iconify text-secondary" data-icon="mdi mdi-checkbox-blank-outline" style="font-size: 1.4em"></span>';
                     }
                 },
                 {
@@ -138,7 +138,7 @@
                     render: function(data, type, row, meta) {
                         if (data) {
                             return '<a href="' + data + '">' +
-                                '<span class="iconify" data-icon="mdi:text-box-edit" style="font-size: 1.4em"></span>' +
+                                '<span class="mdi mdi-text-box-edit" style="font-size: 1.4em"></span>' +
                                 '</a>';
                         }
                         return '';

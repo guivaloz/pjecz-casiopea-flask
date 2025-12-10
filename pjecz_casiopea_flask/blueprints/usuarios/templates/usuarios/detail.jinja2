@@ -13,7 +13,7 @@
         {% endif %}
         {% if current_user.can_admin('USUARIOS') %}
             {% if usuario.estatus == 'A' %}
-                {{ topbar.button('API Key', url_for('usuarios.view_api_key', usuario_id=usuario.id), 'mdi:key') }}
+                {{ topbar.button('API Key', url_for('usuarios.view_api_key', usuario_id=usuario.id), 'mdi mdi-key') }}
             {% endif %}
             {% if usuario.estatus == 'A' %}{{ topbar.button_delete('Eliminar', url_for('usuarios.delete', usuario_id=usuario.id)) }}{% endif %}
             {% if usuario.estatus == 'B' %}{{ topbar.button_recover('Recuperar', url_for('usuarios.recover', usuario_id=usuario.id)) }}{% endif %}
@@ -40,10 +40,10 @@
             </div>
             <div class="col-md-3">
                 {% if current_user.can_view("BITACORAS") %}
-                    {{ detail.button_md(label='Bitácoras', url=url_for('bitacoras.list_active', usuario_id=usuario.id), icon='mdi:calendar-clock', color_class='btn-outline-secondary') }}
+                    {{ detail.button_md(label='Bitácoras', url=url_for('bitacoras.list_active', usuario_id=usuario.id), icon='mdi mdi-calendar-clock', color_class='btn-outline-secondary') }}
                 {% endif %}
                 {% if current_user.can_view("ENTRADAS SALIDAS") %}
-                    {{ detail.button_md(label='Entradas-Salidas', url=url_for('entradas_salidas.list_active', usuario_id=usuario.id), icon='mdi:calendar-clock', color_class='btn-outline-secondary') }}
+                    {{ detail.button_md(label='Entradas-Salidas', url=url_for('entradas_salidas.list_active', usuario_id=usuario.id), icon='mdi mdi-calendar-clock', color_class='btn-outline-secondary') }}
                 {% endif %}
             </div>
         </div>
@@ -116,9 +116,9 @@
                         let myRow = 'usuario_rol_row_' + data.id;
                         let myOnClick = "toggleEstatus('#" + myId + "', '" + data.url + "', '#" + myRow + "')";
                         if (data.estatus === 'A') {
-                            return '<button id="' + myId + '" type="button" class="btn btn-sm btn-outline-primary" onclick="' + myOnClick + '"><span class="iconify" data-icon="mdi:toggle-switch"></span></button>';
+                            return '<button id="' + myId + '" type="button" class="btn btn-sm btn-outline-primary" onclick="' + myOnClick + '"><span class="mdi mdi-toggle-switch"></span></button>';
                         } else {
-                            return '<button id="' + myId + '" type="button" class="btn btn-sm btn-light" onclick="' + myOnClick + '"><span class="iconify" data-icon="mdi:toggle-switch-off"></span></button>';
+                            return '<button id="' + myId + '" type="button" class="btn btn-sm btn-light" onclick="' + myOnClick + '"><span class="mdi mdi-toggle-switch-off"></span></button>';
                         }
                     }
                 }
@@ -157,12 +157,12 @@
                             if (data.estatus === 'A') {
                                 $(id).removeClass('btn-light');
                                 $(id).addClass('btn-outline-primary'); // Color azul
-                                $(id).html('<span class="iconify" data-icon="mdi:toggle-switch"></span>'); // Icono toggle-switch
+                                $(id).html('<span class="mdi mdi-toggle-switch"></span>'); // Icono toggle-switch
                                 $(row).removeClass('table-secondary');
                             } else {
                                 $(id).removeClass('btn-outline-primary');
                                 $(id).addClass('btn-light'); // Color gris
-                                $(id).html('<span class="iconify" data-icon="mdi:toggle-switch-off"></span>'); // Icono toggle-switch-off
+                                $(id).html('<span class="mdi mdi-toggle-switch-off"></span>'); // Icono toggle-switch-off
                                 $(row).addClass('table-secondary');
                             }
                             // console.log(data.message);

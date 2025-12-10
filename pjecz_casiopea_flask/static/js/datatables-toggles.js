@@ -18,9 +18,9 @@
  *       let myRow = 'oficinas_row_' + data.id;
  *       let myOnClick = "toggleEsActivo('#" + myId + "', '" + data.url + "', '#" + myRow + "')";
  *       if (data.es_activo === true) {
- *         return '<button id="' + myId + '" type="button" class="btn btn-sm btn-outline-primary" onclick="' + myOnClick + '"><span class="iconify" data-icon="mdi:toggle-switch"></span></button>';
+ *         return '<button id="' + myId + '" type="button" class="btn btn-sm btn-outline-primary" onclick="' + myOnClick + '"><span class="mdi mdi-toggle-switch"></span></button>';
  *       } else {
- *         return '<button id="' + myId + '" type="button" class="btn btn-sm btn-light" onclick="' + myOnClick + '"><span class="iconify" data-icon="mdi:toggle-switch-off"></span></button>';
+ *         return '<button id="' + myId + '" type="button" class="btn btn-sm btn-light" onclick="' + myOnClick + '"><span class="mdi mdi-toggle-switch-off"></span></button>';
  *       }
  *     }
  *   }
@@ -53,14 +53,14 @@ function toggleEsActivo(id, url, row) {
           $(id).removeClass("btn-light");
           $(id).addClass("btn-outline-primary"); // Color azul
           $(id).html(
-            '<span class="iconify" data-icon="mdi:toggle-switch"></span>'
+            '<span class="mdi mdi-toggle-switch"></span>'
           ); // Icono toggle-switch
           $(row).removeClass("table-secondary");
         } else {
           $(id).removeClass("btn-outline-primary");
           $(id).addClass("btn-light"); // Color gris
           $(id).html(
-            '<span class="iconify" data-icon="mdi:toggle-switch-off"></span>'
+            '<span class="mdi mdi-toggle-switch-off"></span>'
           ); // Icono toggle-switch-off
           $(row).addClass("table-secondary");
         }

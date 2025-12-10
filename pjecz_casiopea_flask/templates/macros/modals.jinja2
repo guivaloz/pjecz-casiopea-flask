@@ -3,48 +3,50 @@
 
 {# Button modal #}
 {%- macro button_modal(label, url, id, icon, message, color_class='btn-outline-secondary') -%}
-    <a class="btn btn-sm {{ color_class }}" href="javascript:void(0)" onclick="showModal{{ id }}('{{ url }}', '{{ message }}');"><span class="iconify" data-icon="{{ icon }}"></span> {{ label }}</a>
+    <a class="btn btn-sm {{ color_class }}" href="javascript:void(0)" onclick="showModal{{ id }}('{{ url }}', '{{ message }}');">
+        <span class="{{ icon }}"></span> {{ label }}
+    </a>
 {%- endmacro -%}
 
 {# Button modal delete #}
-{%- macro button_delete(label="", url="#", id="Delete", icon="mdi:delete", message="", color_class='btn-outline-danger') -%}
+{%- macro button_delete(label="", url="#", id="Delete", icon="mdi mdi-delete", message="", color_class='btn-outline-danger') -%}
     <a class="btn btn-sm {{ color_class }}" href="javascript:void(0)" onclick="showModal{{ id }}('{{ url }}', '{{ message }}');">
-        <span class="iconify" data-icon="{{ icon }}"></span> {{ label }}
+        <span class="{{ icon }}"></span> {{ label }}
     </a>
 {%- endmacro -%}
 
 {# Button modal recover #}
-{%- macro button_recover(label="", url="#", id="Recover", icon="mdi:file-check", message="", color_class='btn-outline-primary') -%}
+{%- macro button_recover(label="", url="#", id="Recover", icon="mdi mdi-file-check", message="", color_class='btn-outline-primary') -%}
     <a class="btn btn-sm {{ color_class }}" href="javascript:void(0)" onclick="showModal{{ id }}('{{ url }}', '{{ message }}');">
-        <span class="iconify" data-icon="{{ icon }}"></span> {{ label }}
+        <span class="{{ icon }}"></span> {{ label }}
     </a>
 {%- endmacro -%}
 
 {# Button modal make #}
-{%- macro button_make(label="", url="#", id="Make", icon="mdi:database-plus", message="", color_class='btn-outline-success') -%}
+{%- macro button_make(label="", url="#", id="Make", icon="mdi mdi-database-plus", message="", color_class='btn-outline-success') -%}
     <a class="btn btn-sm {{ color_class }}" href="javascript:void(0)" onclick="showModal{{ id }}('{{ url }}', '{{ message }}');">
-        <span class="iconify" data-icon="{{ icon }}"></span> {{ label }}
+        <span class="{{ icon }}"></span> {{ label }}
     </a>
 {%- endmacro -%}
 
 {# Button modal small #}
 {%- macro button_modal_sm(label, url, id, icon, message, color_class='btn-outline-primary') -%}
     <a class="w-100 btn btn-sm {{ color_class }}" href="javascript:void(0)" onclick="showModal{{ id }}('{{ url }}', '{{ message }}');">
-        <span class="iconify" data-icon="{{ icon }}"></span> {{ label }}
+        <span class="{{ icon }}"></span> {{ label }}
     </a>
 {%- endmacro -%}
 
 {# Button modal medium #}
 {%- macro button_modal_md(label, url, id, icon, message, color_class='btn-outline-primary') -%}
     <a class="w-100 btn btn-md {{ color_class }}" href="javascript:void(0)" onclick="showModal{{ id }}('{{ url }}', '{{ message }}');">
-        <span class="iconify" data-icon="{{ icon }}"></span> {{ label }}
+        <span class="{{ icon }}"></span> {{ label }}
     </a>
 {%- endmacro -%}
 
 {# Button modal extra large #}
 {%- macro button_modal_xl(label, url, id, icon, message, color_class='btn-outline-primary') -%}
     <a class="w-100 btn btn-lg {{ color_class }}" href="javascript:void(0)" onclick="showModal{{ id }}('{{ url }}', '{{ message }}');">
-        <span class="iconify" data-icon="{{ icon }}"></span> {{ label }}
+        <span class="{{ icon }}"></span> {{ label }}
     </a>
 {%- endmacro -%}
 

@@ -24,13 +24,19 @@ def start():
 @sistemas.route("/favicon.ico")
 def favicon():
     """Favicon"""
-    return send_from_directory("static/img", "favicon.ico", mimetype="image/vnd.microsoft.icon")
+    return send_from_directory("static/img", "estrella.ico", mimetype="image/vnd.microsoft.icon")
 
 
 @sistemas.app_errorhandler(400)
 def bad_request(error):
     """Solicitud errónea"""
     return render_template("sistemas/403.jinja2", error=error), 403
+
+
+@sistemas.app_errorhandler(401)
+def unauthorized(error):
+    """No autorizado"""
+    return render_template("sistemas/403.jinja2"), 403
 
 
 @sistemas.app_errorhandler(403)

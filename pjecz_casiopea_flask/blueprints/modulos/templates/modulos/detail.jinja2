@@ -22,7 +22,7 @@
     {% call detail.card(estatus=modulo.estatus) %}
         <div class="row">
             {{ detail.label_value('Nombre en menú', modulo.nombre_corto) }}
-            {{ detail.label_value('Icono', modulo.icono + ' <span class="iconify" data-icon="' + modulo.icono +'"></span>') }}
+            {{ detail.label_value('Icono', modulo.icono + ' <span class="' + modulo.icono +'"></span>') }}
             {{ detail.label_value('Ruta', modulo.ruta) }}
             {{ detail.label_value_boolean('En menú de navegación', modulo.en_navegacion) }}
         </div>

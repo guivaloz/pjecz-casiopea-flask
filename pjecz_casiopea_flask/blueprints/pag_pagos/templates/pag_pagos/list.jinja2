@@ -7,7 +7,7 @@
 {% block topbar_actions %}
     {% call topbar.page_buttons(titulo) %}
         {% if current_user.can_view('PAG TRAMITES SERVICIOS') %}
-            {{ topbar.button('Trámites y Servicios', url_for('pag_tramites_servicios.list_active'), 'mdi:cart') }}
+            {{ topbar.button('Trámites y Servicios', url_for('pag_tramites_servicios.list_active'), 'mdi mdi-cart') }}
         {% endif %}
         {% if current_user.can_admin('PAG PAGOS') %}
             {% if estatus == 'A' %}{{ topbar.button_list_inactive('Inactivos', url_for('pag_pagos.list_inactive')) }}{% endif %}
@@ -47,8 +47,8 @@
                         </div>
                     </div>
                     <div class="col-4 text-end">
-                        <button title="Buscar" class="btn btn-primary btn-lg" onclick="filtrosPagPagos.buscar(); return false;" id="button-buscar"><span class="iconify" data-icon="mdi:magnify"></span></button>
-                        <button title="Limpiar" class="btn btn-warning btn-lg" type="reset" onclick="filtrosPagPagos.limpiar();" id="button-limpiar"><span class="iconify" data-icon="mdi:broom"></span></button>
+                        <button title="Buscar" class="btn btn-primary btn-lg" onclick="filtrosPagPagos.buscar(); return false;" id="button-buscar"><span class="mdi mdi-magnify"></span></button>
+                        <button title="Limpiar" class="btn btn-warning btn-lg" type="reset" onclick="filtrosPagPagos.limpiar();" id="button-limpiar"><span class="mdi mdi-broom"></span></button>
                     </div>
                 </form>
             </div>

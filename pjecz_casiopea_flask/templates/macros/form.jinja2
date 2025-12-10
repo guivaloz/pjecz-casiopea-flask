@@ -115,7 +115,7 @@
     </form>
 {%- endmacro -%}
 
-{# un formulario, que contiene un token CSRF y campos ocultos #}
+{# un formulario con archivo, que contiene un token CSRF y campos ocultos #}
 {%- macro form_tag_multipart(endpoint, fid='', css_class='', method='post') -%}
     <form action="{{ url_for(endpoint, **kwargs) }}" method="{{ method }}" id="{{ fid }}" class="{{ css_class }}" role="form" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
@@ -123,54 +123,9 @@
     </form>
 {%- endmacro -%}
 
-{# javascript para combo distrito/autoridad #}
-{%- macro js_select_distrito_autoridad(distritos, autoridades, mi_distrito=-1, mi_autoridad=-1) -%}
-    <!-- Combo distrito/autoridad -->
-    <script>
-        let distritos = [];
-        let autoridades = [];
-        let mi_distrito = {{ mi_distrito }};
-        let mi_autoridad = {{ mi_autoridad }};
-        $(document).ready(function() {
-            // Función
-            function cambiarAutoridadesSelect(distrito_id) {
-                autoridades.forEach(function(item) {
-                    if (item.distrito_id == distrito_id) {
-                        $('#autoridad').append($('<option>', { value: item.id, text: item.descripcion }));
-                    }
-                });
-            }
-            // Cargar distritos
-            {% for distrito in distritos %}
-            distritos.push({ id: "{{ distrito.id }}", nombre: "{{ distrito.nombre }}" });
-            {%- endfor %}
-            // Cargar autoridades
-            {% for autoridad in autoridades %}
-            autoridades.push({ distrito_id: "{{ autoridad.distrito_id }}", id: "{{ autoridad.id }}", descripcion: "{{ autoridad.descripcion }}" });
-            {%- endfor %}
-            // Opciones select de distritos
-            distritos.forEach(
-                item => $('#distrito').append($('<option>', { value: item.id, text: item.nombre }))
-            );
-            // Cuando es -1 debe no estar seleccionado
-            if (mi_distrito == -1) mi_distrito = distritos[0].id;
-            // De inicio, poner las opciones en el select de autoridades
-            cambiarAutoridadesSelect(mi_distrito);
-            // Al cambiar el select distrito, cambiar las opciones de autoridad
-            $('#distrito').change(function() {
-                $('#autoridad').empty();
-                cambiarAutoridadesSelect($('#distrito').val());
-            });
-            // Poner valores iniciales si se reciben
-            if (mi_distrito != -1) $('#distrito').val(mi_distrito).change()
-            if (mi_autoridad != -1) $('#autoridad').val(mi_autoridad).change()
-        });
-    </script>
-{%- endmacro -%}
-
 {# Drop Zone CSS #}}
 {%- macro drop_zone_css() -%}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/dropzone.css') }}" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dropzone.css') }}">
 {%- endmacro -%}
 
 {# Drop Zone wrapper #}}

@@ -1,27 +1,30 @@
-{# Navigation #}
+{# Dashboard navigation #}
 
-{%- macro menu(usuario_email) -%}
-    <div class="d-flex flex-column flex-shrink-0 text-white">
-        <ul class="nav nav-pills flex-column mb-auto">
-            {{ caller () }}
+{%- macro menu() -%}
+    <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+        <ul class="nav flex-column">
+            {{ caller() }}
         </ul>
-        <hr>
-        <div class="dropdown">
-            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                <strong>{{ usuario_email }}</strong>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                <li><a class="dropdown-item" href="{{ url_for('usuarios.profile') }}">Perfil</a></li>
-                <li><a class="dropdown-item" href="{{ url_for('usuarios.logout') }}">Salir</a></li>
-            </ul>
-        </div>
+        <hr class="my-3">
+        <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="{{ url_for('usuarios.profile') }}">
+                    Perfil
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="{{ url_for('usuarios.logout') }}">
+                    Salir
+                </a>
+            </li>
+        </ul>
     </div>
 {%- endmacro -%}
 
-{%- macro menu_option(label, url, icon='mdi:folder', li_class='') -%}
-    <li class="nav-item {{li_class}}">
-        <a class="nav-link text-white" href="{{ url }}">
-            <span class="iconify" data-icon="{{ icon }}" style="font-size: 1.4em; margin-right: 4px;"></span> {{ label }}
+{%- macro menu_option(label, url, icon) -%}
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2" href="{{ url }}">
+            <span class="{{ icon }}"></span> {{ label }}
         </a>
     </li>
 {%- endmacro -%}

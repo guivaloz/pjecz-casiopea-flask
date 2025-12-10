@@ -3,39 +3,62 @@
 {% import 'macros/navigation.jinja2' as navigation %}
 
 {% block template_head %}
-    <!-- Google fonts Roboto -->
+    <!-- Google Fonts Roboto -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-    <!-- Bootstrap 5 Dashboard -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bs5-dashboard.css') }}">
+    <!-- Datatables.net -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
+    <!-- Dashboard -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
     <!-- CSRF token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 {% endblock %}
 
 {% block main %}
-    <!-- Header -->
-    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a id="headLogo" class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="{{ url_for('sistemas.start') }}">
-            <img class="mx-2" src="{{ url_for('static', filename='img/logo.png') }}" alt="PJECZ"  width="30" height="30">
+    <!-- Dashboard search -->
+    <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="{{ url_for('sistemas.start') }}">
             Plataforma Casiopea
         </a>
-        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Buscar" aria-label="Buscar">
+        <ul class="navbar-nav flex-row d-md-none">
+            <li class="nav-item text-nowrap">
+                <button class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle search">
+                    <svg class="bi" aria-hidden="true"><use xlink:href="#search"></use></svg>
+                </button>
+            </li>
+            <li class="nav-item text-nowrap">
+                <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <svg class="bi" aria-hidden="true"><use xlink:href="#list"></use></svg>
+                </button>
+            </li>
+        </ul>
+        <div id="navbarSearch" class="navbar-search w-100 collapse">
+            <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
+        </div>
     </header>
-    <!-- Container with navigation and main -->
-    <div class="container-fluid h-100">
-        <div class="row h-100">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
-                {% call navigation.menu(usuario_email=current_user.email) %}
-                    {{ navigation.menu_option('Inicio', url_for('sistemas.start'), 'mdi:view-home') }}
-                    {% for modulo in current_user.modulos_menu_principal %}
-                        {{ navigation.menu_option(modulo.nombre_corto, modulo.ruta, modulo.icono) }}
-                    {% endfor %}
-                {% endcall %}
-            </nav>
+    <!-- Dashboard row -->
+    <div class="container-fluid" style="min-height: 100vh; display: flex; flex-direction: column;">
+        <div class="row" style="flex: 1 0 auto; min-height: 0;">
+            <!-- Dashboard sidebar -->
+            <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+                <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="sidebarMenuLabel">
+                            Plataforma Casiopea
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
+                    </div>
+                    <!-- Dashboard main menu -->
+                    {% call navigation.menu() %}
+                        {{ navigation.menu_option('Inicio', url_for('sistemas.start'), 'mdi mdi-home') }}
+                        {% for modulo in current_user.modulos_menu_principal %}
+                            {{ navigation.menu_option(modulo.nombre_corto, modulo.ruta, modulo.icono) }}
+                        {% endfor %}
+                    {% endcall %}
+                </div>
+            </div>
+            <!-- Dashboard main -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 {% block topbar_actions %}{% endblock %}
                 {{ flash.render() }}
@@ -46,8 +69,10 @@
 {% endblock %}
 
 {% block template_javascript %}
-    <!-- Socket.io -->
-    <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script -->
-    <!-- Currency formatter -->
-    <script src="{{ url_for('static', filename='js/currency-formatter.js') }}"></script>
+    <!-- Datatables.net -->
+    <script type="text/javascript" src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.js"></script>
+    <!-- Moment.js -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/es-mx.min.js"></script>
 {% endblock %}

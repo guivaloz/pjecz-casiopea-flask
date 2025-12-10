@@ -1,18 +1,6 @@
 {# Card #}
-{%- macro card(title='', estatus='', border_class='', text_class='') -%}
+{%- macro card(title='', estatus='', border_class='') -%}
     {% if estatus == 'B' %}<div class="card text-white bg-dark mb-2">{% else %}<div class="card mb-3 {{ border_class }}">{% endif %}
-        {% if title %}<div class="card-header">
-            {{ title }}
-        </div>{% endif %}
-        <div class="card-body {{ text_class }}">
-            {{ caller () }}
-        </div>
-    </div>
-{%- endmacro -%}
-
-{# Card styled #}
-{%- macro card_styled(title='', classes='') -%}
-    <div class="card mb-3 {{classes}}">
         {% if title %}<div class="card-header">
             {{ title }}
         </div>{% endif %}
@@ -22,7 +10,7 @@
     </div>
 {%- endmacro -%}
 
-{# Detail normal #}
+{# Label Value #}
 {%- macro label_value(label, value, link='') -%}
     {% if value != None and value != '' %}
         <div class="row">
@@ -40,71 +28,25 @@
     {% endif %}
 {%- endmacro -%}
 
-{# Detail pre #}
-{%- macro label_value_pre(label, value, link='') -%}
-    {% if value != None and value != '' %}
-        <div class="row">
-            <div class="col-md-3 text-end">
-                {{ label }}
-            </div>
-            <div class="col-md-9 font-monospace">
-                {% if link %}
-                <pre><a href="{{ link }}">{{ value }}</a></pre>
-                {% else %}
-                <pre>{{ value }}</pre>
-                {% endif %}
-            </div>
-        </div>
-    {% endif %}
-{%- endmacro -%}
-
-{# Detail currency #}
-{%- macro label_value_currency(label, value, link='') -%}
-    {% if value != None and value != '' and value != 0 %}
-        <div class="row">
-            <div class="col-md-3 text-end">
-                {{ label }}
-            </div>
-            <div class="col-md-9 font-monospace">
-                {% if link %}
-                <pre class="currency"><a href="{{ link }}">{{ value }}</a></pre>
-                {% else %}
-                <pre class="currency">{{ value }}</pre>
-                {% endif %}
-            </div>
-        </div>
-    {% endif %}
-{%- endmacro -%}
-
-{# Detail link to new tab #}
-{%- macro label_value_new_tab(label, value, link) -%}
-    {% if value != None and value != '' %}
-        <div class="row">
-            <div class="col-md-3 text-end">
-                {{ label }}
-            </div>
-            <div class="col-md-9">
-                <strong><a href="{{ link }}" target="_blank">{{ value }} <span class='iconify' data-icon='mdi:open-in-new'></span></a></strong>
-            </div>
-        </div>
-    {% endif %}
-{%- endmacro -%}
-
-{# Detail big value #}
+{# Label Value #}
 {%- macro label_value_big(label, value, link='', font_size=2) -%}
     {% if value != None and value != '' %}
         <div class="row">
-            <div class="col-md-3 text-end">
-                <span style="font-size:{{font_size}}em">{{ label }}</span>
-            </div>
-            <div class="col-md-9">
-                <span style="font-size:{{font_size}}em">{% if link %} <a href="{{ link }}">{{ value }}</a> {% else %} {{ value }} {% endif %}</span>
-            </div>
+            <div class="col-md-3 text-end"><span style="font-size:{{font_size}}em">
+                {{ label }}
+            </span></div>
+            <div class="col-md-9"><span style="font-size:{{font_size}}em">
+                {% if link %}
+                <strong><a href="{{ link }}">{{ value }}</a></strong>
+                {% else %}
+                <strong>{{ value }}</strong>
+                {% endif %}
+            </span></div>
         </div>
     {% endif %}
 {%- endmacro -%}
 
-{# Detail boolean #}
+{# Label Value Boolean #}
 {%- macro label_value_boolean(label, value, ignore_is_false=False) -%}
     {% if ignore_is_false == False or (ignore_is_false and value) %}
         <div class="row">
@@ -118,33 +60,10 @@
     {% endif %}
 {%- endmacro -%}
 
-{# Mosaic #}
-{%- macro mosaics(title='') -%}
-    <div class="container px-2">
-        {% if title !=''%}<h3 class="pb-2">{{ title }}</h3>{% endif %}
-        <div class="row g-4 py-2 row-cols-1 row-cols-lg-3">
-            {{ caller () }}
-        </div>
-    </div>
-{%- endmacro -%}
-
-{# Mosaic element #}
-{%- macro mosaics_card(label, url, icon) -%}
-            <div class="feature col">
-                <a href="{{ url }}" class="icon-link">
-                    <div class="feature-icon bg-primary bg-gradient">
-                        <span class="iconify" data-icon="{{ icon }}" style="font-size: 48px;"></span>
-                    </div>
-                </a>
-                <h3>{{ label }}</h3>
-                {{ caller () }}
-            </div>
-{%- endmacro -%}
-
 {# Button small #}
 {%- macro button_sm(label, url, icon='', target='', color_class='btn-outline-primary') -%}
     <a class="btn btn-block btn-sm {{ color_class }} w-100 my-2" href="{{ url }}" {% if target %}target="{{ target }}"{% endif %}>
-        {% if icon %}<span class="iconify" data-icon="{{ icon }}"></span>{% endif %}
+        {% if icon %}<span class="{{ icon }}"></span>{% endif %}
         {{ label }}
     </a>
 {%- endmacro -%}
@@ -152,7 +71,7 @@
 {# Button medium #}
 {%- macro button_md(label, url, icon='', target='', color_class='btn-outline-primary') -%}
     <a class="btn btn-block btn-md {{ color_class }} w-100 my-2" href="{{ url }}" {% if target %}target="{{ target }}"{% endif %}>
-        {% if icon %}<span class="iconify" data-icon="{{ icon }}"></span>{% endif %}
+        {% if icon %}<span class="{{ icon }}"></span>{% endif %}
         {{ label }}
     </a>
 {%- endmacro -%}
@@ -160,7 +79,7 @@
 {# Button large #}
 {%- macro button_lg(label, url, icon='', target='', color_class='btn-outline-primary') -%}
     <a class="btn btn-block btn-lg {{ color_class }} w-100 my-2" href="{{ url }}" {% if target %}target="{{ target }}"{% endif %}>
-        {% if icon %}<span class="iconify" data-icon="{{ icon }}"></span>{% endif %}
+        {% if icon %}<span class="{{ icon }}"></span>{% endif %}
         {{ label }}
     </a>
 {%- endmacro -%}
@@ -168,7 +87,7 @@
 {# Button large modal #}
 {%- macro button_lg_modal(label, onclick, icon='', color_class='btn-outline-primary') -%}
     <a class="btn btn-block btn-lg {{ color_class }} w-100 my-2" href="javascript:void(0)" onclick="{{ onclick }}">
-        {% if icon %}<span class="iconify" data-icon="{{ icon }}"></span>{% endif %}
+        {% if icon %}<span class="{{ icon }}"></span>{% endif %}
         {{ label }}
     </a>
 {%- endmacro -%}
@@ -176,7 +95,7 @@
 {# Button extra large #}
 {%- macro button_xl(label, url, icon='', target='', color_class='btn-outline-primary') -%}
     <a class="btn btn-block btn-xl {{ color_class }} w-100 my-2" href="{{ url }}" {% if target %}target="{{ target }}"{% endif %}>
-        {% if icon %}<span class="iconify" data-icon="{{ icon }}"></span>{% endif %}
+        {% if icon %}<span class="{{ icon }}"></span>{% endif %}
         {{ label }}
     </a>
 {%- endmacro -%}
@@ -184,7 +103,7 @@
 {# Button extra large modal #}
 {%- macro button_xl_modal(label, onclick, icon='', color_class='btn-outline-primary') -%}
     <a class="btn btn-block btn-xl {{ color_class }} w-100 my-2" href="javascript:void(0)" onclick="{{ onclick }}">
-        {% if icon %}<span class="iconify" data-icon="{{ icon }}"></span>{% endif %}
+        {% if icon %}<span class="{{ icon }}"></span>{% endif %}
         {{ label }}
     </a>
 {%- endmacro -%}
