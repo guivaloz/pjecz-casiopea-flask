@@ -21,6 +21,6 @@ bitacoras = Typer()
 def enviar_email_reporte():
     """Enviar reporte de bitácoras por email"""
     console = Console()
-    console.print("[cyan]Enviando reporte de bitácoras por email...[/cyan]")
+    console.print("Enviando reporte de bitácoras por email...")
     tarea = task_queue.enqueue("pjecz_lira_flask.blueprints.bitacoras.tasks.enviar_reporte_por_email", SENDGRID_TO_EMAIL)
-    console.print(f"[green]Se ha solicitado la tarea {tarea.id}[/green]")
+    console.print(f"  [green]Se ha solicitado la tarea {tarea.id}[/green]")

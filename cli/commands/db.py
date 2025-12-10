@@ -28,7 +28,6 @@ def inicializar():
     console.print("Inicializando la base de datos...")
     database.drop_all()
     database.create_all()
-    console.print("Base de datos inicializada correctamente.")
 
 
 @db.command()
