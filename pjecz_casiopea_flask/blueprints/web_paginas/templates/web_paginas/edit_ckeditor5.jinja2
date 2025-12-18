@@ -7,7 +7,7 @@
 {% block custom_head %}
     <!-- CKEditor 5 -->
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/45.2.0/ckeditor5.css" crossorigin>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/ckeditor5.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/ckeditor5.css') }}">
 {% endblock %}
 
 {% block topbar_actions %}

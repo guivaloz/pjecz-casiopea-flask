@@ -44,8 +44,8 @@
                         </div>
                     </div>
                     <div class="col-4 text-end">
-                        <button title="Buscar" class="btn btn-primary btn-lg" onclick="filtrosCitCitas.buscar(); return false;" id="button-buscar"><span class="iconify" data-icon="mdi:magnify"></span></button>
-                        <button title="Limpiar" class="btn btn-warning btn-lg" type="reset" onclick="filtrosCitCitas.limpiar();" id="button-limpiar"><span class="iconify" data-icon="mdi:broom"></span></button>
+                        <button title="Buscar" class="btn btn-primary btn-lg" onclick="filtrosCitCitas.buscar(); return false;" id="button-buscar"><span class="mdi mdi-magnify"></span></button>
+                        <button title="Limpiar" class="btn btn-warning btn-lg" type="reset" onclick="filtrosCitCitas.limpiar();" id="button-limpiar"><span class="mdi mdi-broom"></span></button>
                     </div>
                 </form>
             </div>
@@ -147,14 +147,14 @@
             }
         ];
         // DataTable estilos en las filas segun estado
-        configDTCitCitas['createdRow'] = function(row, data, dataIndex) {
-            switch (data.estado) {
-                case "ASISTIO":      $(row).addClass('table-success');   break;
-                case "PENDIENTE":    $(row).addClass('table-warning');   break;
-                case "CANCELO":      $(row).addClass('table-secondary'); break;
-                case "INASISTENCIA": $(row).addClass('table-danger');    break;
-            }
-        };
+        // configDTCitCitas['createdRow'] = function(row, data, dataIndex) {
+        //     switch (data.estado) {
+        //         case "ASISTIO":      $(row).addClass('table-success');   break;
+        //         case "PENDIENTE":    $(row).addClass('table-warning');   break;
+        //         case "CANCELO":      $(row).addClass('table-secondary'); break;
+        //         case "INASISTENCIA": $(row).addClass('table-danger');    break;
+        //     }
+        // };
         // Filtros CitCitas
         const filtrosCitCitas = new FiltrosDataTable('#cit_citas_datatable', configDTCitCitas);
         filtrosCitCitas.agregarInput('filtroEmail', 'cit_cliente_email');

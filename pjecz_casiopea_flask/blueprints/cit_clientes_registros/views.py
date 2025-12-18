@@ -68,7 +68,9 @@ def datatable_json():
                     "url": url_for("cit_clientes_registros.detail", cit_cliente_registro_id=resultado.id),
                 },
                 "email": resultado.email,
-                "nombre": resultado.nombre,
+                "nombres": resultado.nombres,
+                "apellido_primero": resultado.apellido_primero,
+                "apellido_segundo": resultado.apellido_segundo,
                 "expiracion": resultado.expiracion.strftime("%Y-%m-%dT%H:%M:%S"),
                 "ya_registrado": resultado.ya_registrado,
             }

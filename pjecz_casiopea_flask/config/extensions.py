@@ -17,7 +17,6 @@ pwd_context = CryptContext(schemes=["pbkdf2_sha256", "des_crypt"], deprecated="a
 
 def authentication(user_model):
     """Flask-Login authentication"""
-    login_manager.login_view = "usuarios.login"
 
     @login_manager.user_loader
     def load_user(uid):

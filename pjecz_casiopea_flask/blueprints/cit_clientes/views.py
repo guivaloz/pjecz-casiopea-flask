@@ -62,19 +62,20 @@ def datatable_json():
         if apellido_segundo != "":
             consulta = consulta.filter(CitCliente.apellido_segundo.contains(apellido_segundo))
     # Ordenar y paginar
-    registros = consulta.order_by(CitCliente.creado.desc()).offset(start).limit(rows_per_page).all()
+    registros = consulta.order_by(CitCliente.email).offset(start).limit(rows_per_page).all()
     total = consulta.count()
     # Elaborar datos para DataTable
     data = []
     for resultado in registros:
         data.append(
             {
-                "creado": resultado.creado.strftime("%Y-%m-%d %H:%M"),
                 "detalle": {
                     "email": resultado.email,
                     "url": url_for("cit_clientes.detail", cit_cliente_id=resultado.id),
                 },
-                "nombre": resultado.nombre,
+                "nombres": resultado.nombres,
+                "apellido_primero": resultado.apellido_primero,
+                "apellido_segundo": resultado.apellido_segundo,
             }
         )
     # Entregar JSON

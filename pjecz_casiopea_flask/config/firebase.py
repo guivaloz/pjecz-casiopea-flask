@@ -5,51 +5,21 @@ Firebase
 import os
 from functools import lru_cache
 
-from dotenv import load_dotenv
-from google.cloud import secretmanager
 from pydantic_settings import BaseSettings
-
-load_dotenv()
-PROJECT_ID = os.getenv("PROJECT_ID", "")  # Por defecto está vacío, esto significa estamos en modo local
-PREFIX = os.getenv("PREFIX", "firebase")
-
-
-def get_secret(secret_id: str) -> str:
-    """Get secret from Google Cloud Secret Manager"""
-
-    # If not in google cloud, return environment variable
-    if PROJECT_ID == "":
-        return os.getenv(secret_id.upper(), "")
-
-    # Create the secret manager client
-    client = secretmanager.SecretManagerServiceClient()
-
-    # Build the resource name of the secret version
-    if PREFIX != "":
-        secret = f"{PREFIX}_{secret_id}"
-    else:
-        secret = secret_id
-    name = client.secret_version_path(PROJECT_ID, secret, "latest")
-
-    # Access the secret version and return the decoded payload
-    try:
-        response = client.access_secret_version(name=name)
-        return response.payload.data.decode("UTF-8")
-    except Exception:
-        return ""  # If fail return empty string
 
 
 class FirebaseSettings(BaseSettings):
     """Settings"""
 
-    APIKEY: str = get_secret("apikey")
-    APPID: str = get_secret("appid")
-    AUTHDOMAIN: str = get_secret("authdomain")
-    DATABASEURL: str = get_secret("databaseurl")
-    MEASUREMENTID: str = get_secret("measurementid")
-    MESSAGINGSENDERID: str = get_secret("messagingsenderid")
-    PROJECTID: str = get_secret("projectid")
-    STORAGEBUCKET: str = get_secret("storagebucket")
+    # Variables de entorno
+    APIKEY: str = os.getenv("FIREBASE_APIKEY", "")
+    APPID: str = os.getenv("FIREBASE_APPID", "")
+    AUTHDOMAIN: str = os.getenv("FIREBASE_AUTHDOMAIN", "")
+    DATABASEURL: str = os.getenv("FIREBASE_DATABASEURL", "")
+    MEASUREMENTID: str = os.getenv("FIREBASE_MEASUREMENTID", "")
+    MESSAGINGSENDERID: str = os.getenv("FIREBASE_MESSAGINGSENDERID", "")
+    PROJECTID: str = os.getenv("FIREBASE_PROJECTID", "")
+    STORAGEBUCKET: str = os.getenv("FIREBASE_STORAGEBUCKET", "")
 
     class Config:
         """Load configuration"""

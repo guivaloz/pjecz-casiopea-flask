@@ -5,11 +5,7 @@ Settings
 import os
 from functools import lru_cache
 
-from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
-
-load_dotenv()
-SERVICE_PREFIX = os.getenv("SERVICE_PREFIX", "pjecz_casiopea_flask")
 
 
 class Settings(BaseSettings):

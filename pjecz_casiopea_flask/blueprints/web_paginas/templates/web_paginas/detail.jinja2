@@ -41,7 +41,7 @@
                 {{ detail.button_md(
                     label="Editar contenido",
                     url=url_for('web_paginas.edit_ckeditor5', web_pagina_id=web_pagina.id),
-                    icon='mdi:edit',
+                    icon='mdi mdi-edit',
                     color_class='btn-info') }}
             </div>
             <!-- Botón Pendiente -->
@@ -78,8 +78,8 @@
                             </div>
                         </div>
                         <div class="col-6 text-end">
-                            <button title="Buscar" class="btn btn-primary btn-lg" onclick="filtrosWebArchivos.buscar(); return false;" id="button-buscar"><span class="iconify" data-icon="mdi:magnify"></span></button>
-                            <button title="Limpiar" class="btn btn-warning btn-lg" type="reset" onclick="filtrosWebArchivos.limpiar();" id="button-limpiar"><span class="iconify" data-icon="mdi:broom"></span></button>
+                            <button title="Buscar" class="btn btn-primary btn-lg" onclick="filtrosWebArchivos.buscar(); return false;" id="button-buscar"><span class="mdi mdi-magnify"></span></button>
+                            <button title="Limpiar" class="btn btn-warning btn-lg" type="reset" onclick="filtrosWebArchivos.limpiar();" id="button-limpiar"><span class="mdi mdi-broom"></span></button>
                         </div>
                     </form>
                 </div>

@@ -13,10 +13,10 @@
 {% block topbar_actions %}
     {% call topbar.page_buttons(titulo) %}
         {% if current_user.can_view('BITACORAS') %}
-            {{ topbar.button('Bitácoras', url_for('bitacoras.list_active'), 'mdi:calendar-clock') }}
+            {{ topbar.button('Bitácoras', url_for('bitacoras.list_active'), 'mdi mdi-calendar-clock') }}
         {% endif %}
         {% if current_user.can_view('BITACORAS APIS') %}
-            {{ topbar.button('Bitácoras APIs', url_for('bitacoras_apis.list_active'), 'mdi:calendar-clock') }}
+            {{ topbar.button('Bitácoras APIs', url_for('bitacoras_apis.list_active'), 'mdi mdi-calendar-clock') }}
         {% endif %}
     {% endcall %}
 {% endblock %}
@@ -33,8 +33,8 @@
                         </div>
                     </div>
                     <div class="col-6 text-end">
-                        <button title="Buscar" class="btn btn-primary btn-lg" onclick="filtrosEntradasSalidas.buscar(); return false;" id="button-buscar"><span class="iconify" data-icon="mdi:magnify"></span></button>
-                        <button title="Limpiar" class="btn btn-warning btn-lg" type="reset" onclick="filtrosEntradasSalidas.limpiar();" id="button-limpiar"><span class="iconify" data-icon="mdi:broom"></span></button>
+                        <button title="Buscar" class="btn btn-primary btn-lg" onclick="filtrosEntradasSalidas.buscar(); return false;" id="button-buscar"><span class="mdi mdi-magnify"></span></button>
+                        <button title="Limpiar" class="btn btn-warning btn-lg" type="reset" onclick="filtrosEntradasSalidas.limpiar();" id="button-limpiar"><span class="mdi mdi-broom"></span></button>
                     </div>
                 </form>
             </div>
