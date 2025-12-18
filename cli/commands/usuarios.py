@@ -4,7 +4,7 @@ CLI Commands Usuarios
 
 import csv
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -14,6 +14,7 @@ from typer import Typer
 from pjecz_casiopea_flask.blueprints.autoridades.models import Autoridad
 from pjecz_casiopea_flask.blueprints.usuarios.models import Usuario
 from pjecz_casiopea_flask.config.extensions import pwd_context
+from pjecz_casiopea_flask.lib.cryptography_api_key import convert_string_to_fernet_key, decode_api_key, generate_api_key
 from pjecz_casiopea_flask.lib.pwgen import generar_contrasena
 from pjecz_casiopea_flask.lib.safe_string import safe_clave, safe_email, safe_string
 from pjecz_casiopea_flask.main import app, task_queue
@@ -83,6 +84,53 @@ def enviar_email_reporte():
     console.print("[cyan]Enviando reporte de usuarios por email...[/cyan]")
     tarea = task_queue.enqueue("pjecz_lira_flask.blueprints.usuarios.tasks.enviar_reporte_por_email", SENDGRID_TO_EMAIL)
     console.print(f"[green]Se ha solicitado la tarea {tarea.id}[/green]")
+
+
+@usuarios.command()
+def generar_fernet_key(texto: str):
+    """Generar FERNET_KEY"""
+    console = Console()
+    console.print("Agregue FERNET_KEY como variable de entorno")
+    console.print(convert_string_to_fernet_key(texto))
+
+
+@usuarios.command()
+def mostrar_api_key(email: str):
+    """Mostrar la API Key de un usuario"""
+    console = Console()
+    usuario = Usuario.query.filter_by(email=email).first()
+    if usuario is None:
+        console.print(f"[yellow]ERROR: No existe el e-mail {email} en usuarios[/yellow]")
+        return
+    console.print(f"[green]Usuario:[/green] {usuario.email}")
+    console.print(f"[green]API key:[/green] {usuario.api_key}")
+    console.print(f"[green]Expira: [/green] {usuario.api_key_expiracion.strftime('%Y-%m-%d')}")
+
+
+@usuarios.command()
+def decodificar_api_key(api_key: str):
+    """Decodificar API Key"""
+    console = Console()
+    console.print(decode_api_key(api_key))
+
+
+@usuarios.command()
+def nueva_api_key(email: str, dias: int):
+    """Nueva API Key"""
+    console = Console()
+    usuario = Usuario.find_by_identity(email)
+    if usuario is None:
+        console.print(f"[yellow]No existe el e-mail {email} en usuarios[/yellow]")
+        return
+    api_key = generate_api_key(usuario.email)
+    api_key_expiracion = datetime.now() + timedelta(days=dias)
+    usuario.api_key = api_key
+    usuario.api_key_expiracion = api_key_expiracion
+    usuario.save()
+    console.print("Nueva API key")
+    console.print(f"[green]Usuario:[/green] {usuario.email}")
+    console.print(f"[green]API key:[/green] {usuario.api_key}")
+    console.print(f"[green]Expira: [/green] {usuario.api_key_expiracion.strftime('%Y-%m-%d')}")
 
 
 @usuarios.command()
