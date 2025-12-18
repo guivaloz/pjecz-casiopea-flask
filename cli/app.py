@@ -10,6 +10,7 @@ from cli.commands.db import db
 from cli.commands.distritos import distritos
 from cli.commands.domicilios import domicilios
 from cli.commands.materias import materias
+from cli.commands.migrar import migrar
 from cli.commands.modulos import modulos
 from cli.commands.permisos import permisos
 from cli.commands.roles import roles
@@ -23,6 +24,7 @@ cli.add_typer(db, name="db")
 cli.add_typer(distritos, name="distritos")
 cli.add_typer(domicilios, name="domicilios")
 cli.add_typer(materias, name="materias")
+cli.add_typer(migrar, name="migrar")
 cli.add_typer(modulos, name="modulos")
 cli.add_typer(permisos, name="permisos")
 cli.add_typer(roles, name="roles")
