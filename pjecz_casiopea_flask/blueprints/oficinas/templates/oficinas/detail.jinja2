@@ -280,14 +280,14 @@
                 }
             ];
             // DataTable estilos en las filas segun estado
-            configDTCitCitas['createdRow'] = function(row, data, dataIndex) {
-                switch (data.estado) {
-                    case "ASISTIO":      $(row).addClass('table-success');   break;
-                    case "PENDIENTE":    $(row).addClass('table-warning');   break;
-                    case "CANCELO":      $(row).addClass('table-secondary'); break;
-                    case "INASISTENCIA": $(row).addClass('table-danger');    break;
-                }
-            };
+            // configDTCitCitas['createdRow'] = function(row, data, dataIndex) {
+            //     switch (data.estado) {
+            //         case "ASISTIO":      $(row).addClass('table-success');   break;
+            //         case "PENDIENTE":    $(row).addClass('table-warning');   break;
+            //         case "CANCELO":      $(row).addClass('table-secondary'); break;
+            //         case "INASISTENCIA": $(row).addClass('table-danger');    break;
+            //     }
+            // };
             // Filtros CitCitas
             const filtrosCitCitas = new FiltrosDataTable('#cit_citas_datatable', configDTCitCitas);
             filtrosCitCitas.agregarInput('filtroEmail', 'cit_cliente_email');

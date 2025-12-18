@@ -137,14 +137,14 @@
                 }
             ];
             // DataTable estilos en las filas segun estado
-            configDTCitCitas['createdRow'] = function(row, data, dataIndex) {
-                switch (data.estado) {
-                    case "ASISTIO":      $(row).addClass('table-success');   break;
-                    case "PENDIENTE":    $(row).addClass('table-warning');   break;
-                    case "CANCELO":      $(row).addClass('table-secondary'); break;
-                    case "INASISTENCIA": $(row).addClass('table-danger');    break;
-                }
-            };
+            // configDTCitCitas['createdRow'] = function(row, data, dataIndex) {
+            //     switch (data.estado) {
+            //         case "ASISTIO":      $(row).addClass('table-success');   break;
+            //         case "PENDIENTE":    $(row).addClass('table-warning');   break;
+            //         case "CANCELO":      $(row).addClass('table-secondary'); break;
+            //         case "INASISTENCIA": $(row).addClass('table-danger');    break;
+            //     }
+            // };
             // NO HAY Filtros CitCitas
             const filtrosCitCitas = new FiltrosDataTable('#cit_citas_datatable', configDTCitCitas);
             filtrosCitCitas.precargar();
@@ -207,15 +207,15 @@
                 }
             ];
             // Cambiar el color de la fila según el estado
-            configDTPagPagos['createdRow'] = function( row, data, dataIndex, cells){
-                switch (data.estado)    {
-                    case "SOLICITADO": $(row).addClass("table-warning");   break;
-                    case "PAGADO":     $(row).addClass("table-success");   break;
-                    case "ENTREGADO":  $(row).addClass("table-primary");   break;
-                    case "CANCELADO":  $(row).addClass("table-secondary"); break;
-                    case "FALLIDO":    $(row).addClass("table-danger");    break;
-                }
-            };
+            // configDTPagPagos['createdRow'] = function( row, data, dataIndex, cells){
+            //     switch (data.estado)    {
+            //         case "SOLICITADO": $(row).addClass("table-warning");   break;
+            //         case "PAGADO":     $(row).addClass("table-success");   break;
+            //         case "ENTREGADO":  $(row).addClass("table-primary");   break;
+            //         case "CANCELADO":  $(row).addClass("table-secondary"); break;
+            //         case "FALLIDO":    $(row).addClass("table-danger");    break;
+            //     }
+            // };
             // NO HAY Filtros PagPagos
             const filtrosPagPagos = new FiltrosDataTable('#pag_pagos_datatable', configDTPagPagos);
             filtrosPagPagos.precargar();

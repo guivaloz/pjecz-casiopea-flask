@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 from rich.console import Console
 from typer import Typer
 
-from pjecz_casiopea_flask.main import app, database
+from pjecz_casiopea_flask.main import app
 
 load_dotenv()  # Take environment variables from .env
 
@@ -29,6 +29,39 @@ NEW_DB_HOST = os.environ.get("NEW_DB_HOST")
 NEW_DB_PORT = os.environ.get("NEW_DB_PORT")
 
 app.app_context().push()
+
+
+def copiar_cit_dias_inhabiles(conn_old, cursor_old, conn_new, cursor_new) -> str:
+    """Copiar tabla cit_dias_inhabiles de la base de datos ANTERIOR a la NUEVA"""
+    # Leer registros en la base de datos ANTERIOR
+    try:
+        cursor_old.execute("SELECT fecha, descripcion, estatus FROM cit_dias_inhabiles ORDER BY fecha ASC")
+        rows = cursor_old.fetchall()
+    except Exception as error:
+        raise Exception(f"Error al leer registros de la BD ANTERIOR: {error}")
+    # Continuar solo si se leyeron registros
+    if not rows:
+        raise Exception("No hay registros en la base de datos ANTERIOR.")
+    # Insertar registros en la base de datos NUEVA
+    contador = 0
+    insert_query = "INSERT INTO cit_dias_inhabiles (id, fecha, descripcion, estatus) VALUES (%s, %s, %s, %s)"
+    try:
+        for row in rows:
+            fecha = row[0]  # La fecha es la primer columna
+            # Consultar si el registro ya existe
+            cursor_new.execute("SELECT id FROM cit_dias_inhabiles WHERE fecha = %s", (fecha,))
+            if cursor_new.fetchone():
+                continue  # Ya existe, se omite
+            # Insertar
+            new_id = str(uuid.uuid4())
+            cursor_new.execute(insert_query, (new_id, *row))
+            contador += 1
+    except Exception as error:
+        raise Exception(f"Error al insertar {fecha}: {error}")
+    # Confirmar los cambios
+    conn_new.commit()
+    # Mensaje final
+    return f"  {contador} cit_dias_inhabiles copiados."
 
 
 def copiar_distritos(conn_old, cursor_old, conn_new, cursor_new) -> str:
@@ -877,6 +910,9 @@ def copiar():
         return
     # Ejecutar las copias en el orden correcto
     try:
+        console.print("[cyan]Copiando tabla cit_dias_inhabiles...[/cyan]")
+        mensaje = copiar_cit_dias_inhabiles(conn_old, cursor_old, conn_new, cursor_new)
+        console.print(f"[green]{mensaje}[/green]")
         console.print("[cyan]Copiando tabla distritos...[/cyan]")
         mensaje = copiar_distritos(conn_old, cursor_old, conn_new, cursor_new)
         console.print(f"[green]{mensaje}[/green]")

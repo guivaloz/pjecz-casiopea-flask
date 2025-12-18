@@ -62,7 +62,9 @@
                 <tr>
                     <th>Creado</th>
                     <th>Correo electrónico</th>
-                    <th>Nombre completo</th>
+                    <th>Nombres</th>
+                    <th>Apellido primero</th>
+                    <th>Apellido segundo</th>
                     <th>Expiración</th>
                     <th>Ya registrado</th>
                 </tr>
@@ -83,7 +85,9 @@
         configDTCitClientesRegistros['columns'] = [
             { data: 'detalle' },
             { data: 'email' },
-            { data: 'nombre' },
+            { data: 'nombres' },
+            { data: 'apellido_primero' },
+            { data: 'apellido_segundo' },
             { data: 'expiracion' },
             { data: 'ya_registrado' }
         ];
@@ -96,14 +100,31 @@
                 }
             },
             {
-                targets: 3, // expiracion
+                targets: 1, // email
+                data: null,
+                render: function(data, type, row, meta) {
+                    if (data.length > 24) {
+                        return data.substring(0, 24) + '…';
+                    }
+                    return data;
+                }
+            },
+            {
+                targets: [2, 3, 4], // nombres, apellido_primero, apellido_segundo
+                data: null,
+                render: function(data, type, row, meta) {
+                    return data.length > 24 ? data.substring(0, 24) + '…' : data;
+                }
+            },
+            {
+                targets: 5, // expiracion
                 type: "date",
                 render: function (data, type, row) {
                     return moment.utc(data).local().format('YYYY-MM-DD HH:mm');
                 }
             },
             {
-                targets: 4, // ya_registrado
+                targets: 6, // ya_registrado
                 data: null,
                 render: function(data, type, row, meta) {
                     if (data) {
@@ -114,13 +135,13 @@
             }
         ];
         // DataTable estilos en las filas según ya_registrado
-        configDTCitClientesRegistros['createdRow'] = function(row, data, dataIndex) {
-            if (data.ya_registrado) {
-                $(row).addClass('table-success');
-            } else {
-                $(row).addClass('table-warning');
-            }
-        };
+        // configDTCitClientesRegistros['createdRow'] = function(row, data, dataIndex) {
+        //     if (data.ya_registrado) {
+        //         $(row).addClass('table-success');
+        //     } else {
+        //         $(row).addClass('table-warning');
+        //     }
+        // };
         // Filtros Cit Clientes Registros
         const filtrosCitClientesRegistros = new FiltrosDataTable('#cit_clientes_registros_datatable', configDTCitClientesRegistros);
         filtrosCitClientesRegistros.agregarInput('filtroEmail', 'email');

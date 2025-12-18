@@ -124,13 +124,13 @@
             }
         ];
         // DataTable estilos en las filas segun ya_recuperado
-        configDTCitClientesRecuperaciones['createdRow'] = function(row, data, dataIndex) {
-            if (data.ya_recuperado) {
-                $(row).addClass('table-success');
-            } else {
-                $(row).addClass('table-warning');
-            }
-        };
+        // configDTCitClientesRecuperaciones['createdRow'] = function(row, data, dataIndex) {
+        //     if (data.ya_recuperado) {
+        //         $(row).addClass('table-success');
+        //     } else {
+        //         $(row).addClass('table-warning');
+        //     }
+        // };
         // Filtros Cit Clientes Recuperaciones
         const filtrosCitClientesRecuperaciones = new FiltrosDataTable('#cit_clientes_recuperaciones_datatable', configDTCitClientesRecuperaciones);
         filtrosCitClientesRecuperaciones.agregarInput('filtroEmail', 'email');

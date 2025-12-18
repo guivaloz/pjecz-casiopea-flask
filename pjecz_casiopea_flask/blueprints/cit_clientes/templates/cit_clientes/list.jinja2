@@ -63,9 +63,10 @@
         <table id="cit_clientes_datatable" class="table {% if estatus == 'B'%}table-dark{% endif %} display nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>Creado</th>
                     <th>Correo electrónico</th>
-                    <th>Nombre completo</th>
+                    <th>Nombres</th>
+                    <th>Apellido primero</th>
+                    <th>Apellido segundo</th>
                 </tr>
             </thead>
         </table>
@@ -82,23 +83,27 @@
         configDTCitClientes['ajax']['url'] = '{{ url_for("cit_clientes.datatable_json") }}';
         configDTCitClientes['ajax']['data'] = {{ filtros }};
         configDTCitClientes['columns'] = [
-            { data: "creado" },
             { data: "detalle" },
-            { data: "nombre" }
+            { data: "nombres" },
+            { data: "apellido_primero" },
+            { data: "apellido_segundo" }
         ];
         configDTCitClientes['columnDefs'] = [
             {
-                targets: 1, // detalle
+                targets: 0, // detalle
                 data: null,
                 render: function(data, type, row, meta) {
+                    if (data.email.length > 24) {
+                      return '<a href="' + data.url + '">' + data.email.substring(0, 24) + '…</a>';
+                    }
                     return '<a href="' + data.url + '">' + data.email + '</a>';
                 }
             },
             {
-                targets: 2, // nombre
+                targets: [1, 2, 3], // nombres, apellido_primero, apellido_segundo
                 data: null,
                 render: function(data, type, row, meta) {
-                    return data.length > 32 ? data.substring(0, 32) + '…' : data;
+                    return data.length > 24 ? data.substring(0, 24) + '…' : data;
                 }
             }
         ];
