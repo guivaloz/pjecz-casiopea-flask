@@ -1,11 +1,13 @@
 """
-PJECZ Fornax CLI
+PJECZ Casiopea CLI
 """
 
 from typer import Typer
 
 from cli.commands.autoridades import autoridades
 from cli.commands.bitacoras import bitacoras
+from cli.commands.cit_citas import cit_citas
+from cli.commands.cit_clientes import cit_clientes
 from cli.commands.db import db
 from cli.commands.distritos import distritos
 from cli.commands.domicilios import domicilios
@@ -20,6 +22,8 @@ from cli.commands.usuarios_roles import usuarios_roles
 cli = Typer()
 cli.add_typer(autoridades, name="autoridades")
 cli.add_typer(bitacoras, name="bitacoras")
+cli.add_typer(cit_citas, name="cit_citas")
+cli.add_typer(cit_clientes, name="cit_clientes")
 cli.add_typer(db, name="db")
 cli.add_typer(distritos, name="distritos")
 cli.add_typer(domicilios, name="domicilios")

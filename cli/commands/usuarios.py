@@ -115,7 +115,7 @@ def decodificar_api_key(api_key: str):
 
 
 @usuarios.command()
-def nueva_api_key(email: str, dias: int):
+def nueva_api_key(email: str, dias: int = 365):
     """Nueva API Key"""
     console = Console()
     usuario = Usuario.find_by_identity(email)
