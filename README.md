@@ -1,6 +1,6 @@
 # pjecz-casiopea-flask
 
-Plataforma de administración del sistema de citas.
+Plataforma de administración del sistema de citas
 
 ## Variables de entorno
 
@@ -37,8 +37,8 @@ OLD_DB_PASS=
 OLD_SQLALCHEMY_DATABASE_URI=
 
 # Cryptography
-FERNET_KEY=
-SALT=
+FERNET_KEY=XXXXXXXXXXXX
+SALT=XXXXXXXXXXXX
 
 # Host
 HOST=http://127.0.0.1:5000
