@@ -262,7 +262,7 @@ def recover(oficina_id):
 
 @oficinas.route("/oficinas/select_json", methods=["POST"])
 def query_oficinas_json():
-    """Proporcionar el JSON de oficinas para elegir con un Select2"""
+    """Proporcionar el JSON de oficinas para elegir con un Select2, puede filtrar por clave o descripcion_corta"""
     consulta = Oficina.query.filter(Oficina.estatus == "A")
     if "searchString" in request.form:
         clave_o_descripcion_corta = safe_string(request.form["searchString"], save_enie=True)

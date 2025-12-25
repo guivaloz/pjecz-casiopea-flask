@@ -4,12 +4,6 @@
 
 {% block title %}{{ titulo }}{% endblock %}
 
-{% block custom_head %}
-    <!-- Select2 bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link href="https://storage.googleapis.com/pjecz-informatica/static/css/select2.css" rel="stylesheet" />
-{% endblock %}
-
 {% block topbar_actions %}
     {% call topbar.page_buttons(titulo) %}
         {% if current_user.can_view('BITACORAS') %}
@@ -89,26 +83,20 @@
         filtrosEntradasSalidas.precargar();
     </script>
     <!-- Select2 -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        // Cuando esté listo el DOM
-        $(document).ready(function(){
-            // Preparar Select2 para filtrar por Usuario
-            $('#filtroEntradasSalidasUsuarioId').select2({
-                placeholder: {id: "", text: "Todos los usuarios"},
-                allowClear: true,
-                minimumInputLength: 4,
-                ajax: {
-                    url: '/usuarios/select2_json',
-                    headers: { "X-CSRF-TOKEN": "{{ csrf_token() }}" },
-                    dataType: 'json',
-                    delay: 250,
-                    type: "POST",
-                    data: function (params) {
-                        return { 'searchString': params.term }
-                    }
-                }
-            });
-        });
+        // Cargar el select con los usuarios
+        const selectUsuario = document.getElementById('filtroEntradasSalidasUsuarioId');
+        fetch('{{ url_for("usuarios.select_json") }}')
+            .then(response => response.json())
+            .then(data => {
+                selectUsuario.innerHTML = '<option value="" selected>-- Seleccione un usuario --</option>';
+                data.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.id;
+                    option.text = item.texto;
+                    selectUsuario.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error al cargar los usuarios:', error));
     </script>
 {% endblock %}

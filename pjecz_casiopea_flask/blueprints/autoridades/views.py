@@ -10,6 +10,8 @@ from flask_login import current_user, login_required
 from ...lib.datatables import get_datatable_parameters, output_datatable_json
 from ...lib.safe_string import safe_clave, safe_message, safe_string, safe_uuid
 from ..bitacoras.models import Bitacora
+from ..distritos.models import Distrito
+from ..materias.models import Materia
 from ..modulos.models import Modulo
 from ..permisos.models import Permiso
 from ..usuarios.decorators import permission_required
@@ -70,6 +72,7 @@ def datatable_json():
                 "descripcion": resultado.descripcion,
                 "descripcion_corta": resultado.descripcion_corta,
                 "distrito_clave": resultado.distrito.clave,
+                "materia_clave": resultado.materia.clave,
                 "toggle_es_activo": {
                     "id": resultado.id,
                     "es_activo": resultado.es_activo,
@@ -131,8 +134,9 @@ def new():
             return render_template("autoridades/new.jinja2", form=form)
         # Guardar
         autoridad = Autoridad(
-            distrito_id=form.distrito.data,
             clave=clave,
+            materia_id=form.materia.data,
+            distrito_id=form.distrito.data,
             descripcion=safe_string(form.descripcion.data, save_enie=True),
             descripcion_corta=safe_string(form.descripcion_corta.data, save_enie=True),
             es_activo=form.es_activo.data,
@@ -147,6 +151,14 @@ def new():
         bitacora.save()
         flash(bitacora.descripcion, "success")
         return redirect(bitacora.url)
+    # Consultar el distrito NO DEFINIDO
+    distrito_no_definido = Distrito.query.filter_by(clave="ND").first()
+    if distrito_no_definido:
+        form.distrito.data = str(distrito_no_definido.id)  # Es un SelectField
+    # Consultar la materia NO DEFINIDA
+    materia_no_definida = Materia.query.filter_by(clave="ND").first()
+    if materia_no_definida:
+        form.materia.data = str(materia_no_definida.id)  # Es un SelectField
     return render_template("autoridades/new.jinja2", form=form)
 
 
@@ -170,8 +182,9 @@ def edit(autoridad_id):
                 flash("La clave ya está en uso. Debe de ser única.", "warning")
         # Si es valido actualizar
         if es_valido:
-            autoridad.distrito_id = form.distrito.data
             autoridad.clave = clave
+            autoridad.materia_id = form.materia.data
+            autoridad.distrito_id = form.distrito.data
             autoridad.descripcion = safe_string(form.descripcion.data, save_enie=True)
             autoridad.descripcion_corta = safe_string(form.descripcion_corta.data, save_enie=True)
             autoridad.es_activo = form.es_activo.data
@@ -185,8 +198,9 @@ def edit(autoridad_id):
             bitacora.save()
             flash(bitacora.descripcion, "success")
             return redirect(bitacora.url)
-    form.distrito.data = autoridad.distrito_id  # Usa id porque es un SelectField
     form.clave.data = autoridad.clave
+    form.materia.data = str(autoridad.materia_id)  # Usa id porque es un SelectField
+    form.distrito.data = str(autoridad.distrito_id)  # Usa id porque es un SelectField
     form.descripcion.data = autoridad.descripcion
     form.descripcion_corta.data = autoridad.descripcion_corta
     form.es_activo.data = autoridad.es_activo
@@ -235,56 +249,22 @@ def recover(autoridad_id):
     return redirect(url_for("autoridades.detail", autoridad_id=autoridad.id))
 
 
-@autoridades.route("/autoridades/select_json/<distrito_id>", methods=["GET", "POST"])
-def query_autoridades_json(distrito_id):
-    """Proporcionar el JSON de autoridades para elegir con un Select"""
-    # Consultar
+@autoridades.route("/autoridades/distrito_select_json/<distrito_id>", methods=["GET", "POST"])
+def distrito_select_json(distrito_id):
+    """Proporcionar el JSON de autoridades de un distrito para elegir con un select"""
     distrito_id = safe_uuid(distrito_id)
     if distrito_id == "":
         abort(400)
-    consulta = Autoridad.query.filter_by(estatus="A").filter_by(distrito_id=distrito_id)
-    # Ordenar
-    consulta = consulta.order_by(Autoridad.descripcion_corta)
-    # Elaborar datos para Select
+    consulta = Autoridad.query.filter_by(estatus="A").filter_by(distrito_id=distrito_id).order_by(Autoridad.descripcion_corta)
     data = []
     for resultado in consulta.all():
-        data.append(
-            {
-                "id": resultado.id,
-                "descripcion_corta": resultado.descripcion_corta,
-            }
-        )
-    # Entregar JSON
+        data.append({"id": str(resultado.id), "texto": f"{resultado.clave}: {resultado.descripcion_corta}"})
     return json.dumps(data)
-
-
-@autoridades.route("/autoridades/select_json", methods=["GET", "POST"])
-def select_autoridades_json():
-    """Proporcionar el JSON de autoridades para elegir con un Select"""
-    # Consultar
-    consulta = Autoridad.query.filter(Autoridad.estatus == "A")
-    if "es_activo" in request.form:
-        consulta = consulta.filter_by(es_activo=request.form["es_activo"] == "true")
-    if "es_jurisdiccional" in request.form:
-        consulta = consulta.filter_by(es_jurisdiccional=request.form["es_jurisdiccional"] == "true")
-    if "clave" in request.form:
-        clave = safe_clave(request.form["clave"])
-        if clave != "":
-            consulta = consulta.filter(Autoridad.clave.contains(clave))
-    results = []
-    for autoridad in consulta.order_by(Autoridad.id).limit(15).all():
-        results.append(
-            {
-                "id": autoridad.id,
-                "text": autoridad.clave + "  : " + autoridad.descripcion_corta,
-            }
-        )
-    return {"results": results, "pagination": {"more": False}}
 
 
 @autoridades.route("/autoridades/select2_json", methods=["GET", "POST"])
 def select2_json():
-    """Proporcionar el JSON de autoridades para elegir con un Select2"""
+    """Proporcionar el JSON de usuarios para elegir con un Select2, puede recibir parte de la clave a buscar"""
     consulta = Autoridad.query.filter(Autoridad.estatus == "A")
     if "searchString" in request.form:
         clave = safe_clave(request.form["searchString"])

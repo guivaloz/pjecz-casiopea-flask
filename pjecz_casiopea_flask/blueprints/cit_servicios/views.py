@@ -163,7 +163,10 @@ def new():
             es_valido = False
             flash("La clave ya está en uso. Debe de ser único.", "warning")
         # Si documento limite es menor a 1, cambiar a 0
-        documentos_limite = form.documentos_limite.data
+        if form.documentos_limite.data is None:
+            documentos_limite = 0
+        else:
+            documentos_limite = form.documentos_limite.data
         if documentos_limite < 1:
             documentos_limite = 0
         # Tomar los tiempos desde y hasta
@@ -175,7 +178,10 @@ def new():
                 desde, hasta = hasta, desde
         # Transformar el texto de los días habilitados, por ejemplo "MARTES, MIERCOLES" a "23"
         dias_habilitados = ""
-        dias_habilitados_input = form.dias_habilitados.data.strip()
+        if form.dias_habilitados.data is None:
+            dias_habilitados_input = ""
+        else:
+            dias_habilitados_input = form.dias_habilitados.data.strip()
         if dias_habilitados_input != "":
             for dia_seleccionado in dias_habilitados_input.split(","):
                 dia_seleccionado = dia_seleccionado.strip().upper()
@@ -248,7 +254,10 @@ def edit(cit_servicio_id):
                 desde, hasta = hasta, desde
         # Transformar el texto de los días habilitados, por ejemplo "MARTES, MIERCOLES" a "23"
         dias_habilitados = ""
-        dias_habilitados_input = form.dias_habilitados.data.strip()
+        if form.dias_habilitados.data is None:
+            dias_habilitados_input = ""
+        else:
+            dias_habilitados_input = form.dias_habilitados.data.strip()
         if dias_habilitados_input != "":
             for dia_seleccionado in dias_habilitados_input.split(","):
                 dia_seleccionado = dia_seleccionado.strip().upper()

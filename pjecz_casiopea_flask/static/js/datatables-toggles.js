@@ -25,15 +25,6 @@
  *     }
  *   }
  * ];
- * // Cambiar las filas según toggle_es_activo
- * configDTAutoridades['createdRow'] = function(row, data, dataIndex) {
- *   if (data.hasOwnProperty('toggle_es_activo')) {
- *     // Cambiar el color de la fila si es_activo es false
- *     if (!data.toggle_es_activo.es_activo) $(row).addClass('table-secondary');
- *     // Asignar un id a la fila
- *     $(row).attr('id', 'oficinas_row_' + data.toggle_es_activo.id);
- *   }
- * };
  */
 
 // Boton toggle_es_activo

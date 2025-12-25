@@ -214,15 +214,11 @@ def recover(rol_id):
     return redirect(url_for("roles.detail", rol_id=rol.id))
 
 
-@roles.route("/roles/select2_json", methods=["POST"])
-def select2_json():
-    """Proporcionar el JSON de roles para elegir con un Select2, se usa para filtrar en DataTables"""
-    consulta = Rol.query.filter(Rol.estatus == "A")
-    if "searchString" in request.form:
-        nombre = safe_string(request.form["searchString"], save_enie=True)
-        if nombre != "":
-            consulta = consulta.filter(Rol.nombre.contains(nombre))
-    resultados = []
-    for rol in consulta.order_by(Rol.nombre).limit(10).all():
-        resultados.append({"id": rol.id, "text": rol.nombre})
-    return {"results": resultados, "pagination": {"more": False}}
+@roles.route("/roles/select_json", methods=["GET", "POST"])
+def select_json():
+    """Proporcionar el JSON de roles para elegir con un select"""
+    consulta = Rol.query.filter_by(estatus="A").order_by(Rol.nombre)
+    data = []
+    for resultado in consulta.all():
+        data.append({"id": str(resultado.id), "texto": resultado.nombre})
+    return json.dumps(data)

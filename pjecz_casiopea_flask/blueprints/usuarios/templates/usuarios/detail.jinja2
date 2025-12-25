@@ -24,7 +24,7 @@
 {% block content %}
     {% call detail.card(estatus=usuario.estatus) %}
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-9">
                 {{ detail.label_value('Nombre', usuario.nombre) }}
                 {% if current_user.can_view("DISTRITOS") %}
                     {{ detail.label_value('Distrito', usuario.autoridad.distrito.nombre, url_for('distritos.detail', distrito_id=usuario.autoridad.distrito_id)) }}
@@ -123,18 +123,6 @@
                     }
                 }
             ];
-            // DataTable UsuariosRoles filas
-            configDTUsuariosRoles['createdRow'] = function(row, data, dataIndex) {
-                // Cambiar estilo en las fila según estatus
-                switch (data.estatus) {
-                    // case "A": $(row).addClass('table-light'); break;
-                    case "B": $(row).addClass('table-secondary'); break;
-                }
-                // Definir un ID único para cada fila
-                if (data.hasOwnProperty('toggle_estatus')) {
-                    $(row).attr('id', 'usuario_rol_row_' + data.toggle_estatus.id);
-                }
-            };
             // Filtros UsuariosRoles
             const filtrosDTUsuariosRoles = new FiltrosDataTable('#usuarios_roles_datatable', configDTUsuariosRoles);
             filtrosDTUsuariosRoles.precargar();
@@ -165,8 +153,6 @@
                                 $(id).html('<span class="mdi mdi-toggle-switch-off"></span>'); // Icono toggle-switch-off
                                 $(row).addClass('table-secondary');
                             }
-                            // console.log(data.message);
-                            console.log(row);
                         } else {
                             console.log(data.message);
                         }

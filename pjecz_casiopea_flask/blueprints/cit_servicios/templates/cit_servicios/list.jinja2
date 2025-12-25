@@ -123,14 +123,14 @@
             }
         ];
         // Cambiar las filas según toggle_es_activo
-        configDTCitServicios['createdRow'] = function(row, data, dataIndex) {
-            if (data.hasOwnProperty('toggle_es_activo')) {
-                // Cambiar el color de la fila si es_activo es false
-                if (!data.toggle_es_activo.es_activo) $(row).addClass('table-secondary');
-                // Asignar un id a la fila
-                $(row).attr('id', 'cit_servicios_row_' + data.toggle_es_activo.id);
-            }
-        };
+        // configDTCitServicios['createdRow'] = function(row, data, dataIndex) {
+        //     if (data.hasOwnProperty('toggle_es_activo')) {
+        //         // Cambiar el color de la fila si es_activo es false
+        //         if (!data.toggle_es_activo.es_activo) $(row).addClass('table-secondary');
+        //         // Asignar un id a la fila
+        //         $(row).attr('id', 'cit_servicios_row_' + data.toggle_es_activo.id);
+        //     }
+        // };
         // Filtros CitServicios
         const filtrosCitServicios = new FiltrosDataTable('#cit_servicios_datatable', configDTCitServicios);
         filtrosCitServicios.agregarInput('filtroClave', 'clave');

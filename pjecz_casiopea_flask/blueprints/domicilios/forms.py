@@ -21,5 +21,5 @@ class DomicilioForm(FlaskForm):
     num_int = StringField("Núm. Interior", validators=[Optional()])
     colonia = StringField("Colonia", validators=[Optional(), Length(max=256)])
     cp = IntegerField("CP", validators=[DataRequired()])
-    es_activo = BooleanField("Activo", validators=[Optional()])
+    es_activo = BooleanField("Activo", validators=[Optional()], default=True)
     guardar = SubmitField("Guardar")

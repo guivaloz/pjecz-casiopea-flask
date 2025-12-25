@@ -20,19 +20,19 @@
 
 {% block content %}
     {% call detail.card(estatus=autoridad.estatus) %}
-        <div class="row">
-            <div class="col-md-6">
-                {# detail.label_value_big('Clave', autoridad.clave) #}
-                {% if current_user.can_view("DISTRITOS") %}
-                    {{ detail.label_value('Distrito', autoridad.distrito.nombre, url_for('distritos.detail', distrito_id=autoridad.distrito_id)) }}
-                {% else %}
-                    {{ detail.label_value('Distrito', autoridad.distrito.nombre) }}
-                {% endif %}
-                {{ detail.label_value('Descripción', autoridad.descripcion) }}
-                {{ detail.label_value('Descripción corta', autoridad.descripcion_corta) }}
-                {{ detail.label_value_boolean('Activo', autoridad.es_activo) }}
-            </div>
-        </div>
+        {% if current_user.can_view("MATERIAS") %}
+            {{ detail.label_value('Materia', autoridad.materia.nombre, url_for('materias.detail', materia_id=autoridad.materia_id)) }}
+        {% else %}
+            {{ detail.label_value('Materia', autoridad.materia.nombre) }}
+        {% endif %}
+        {% if current_user.can_view("DISTRITOS") %}
+            {{ detail.label_value('Distrito', autoridad.distrito.nombre, url_for('distritos.detail', distrito_id=autoridad.distrito_id)) }}
+        {% else %}
+            {{ detail.label_value('Distrito', autoridad.distrito.nombre) }}
+        {% endif %}
+        {{ detail.label_value('Descripción', autoridad.descripcion) }}
+        {{ detail.label_value('Descripción corta', autoridad.descripcion_corta) }}
+        {{ detail.label_value_boolean('Activo', autoridad.es_activo) }}
     {% endcall %}
     {% if current_user.can_view('USUARIOS') %}
         {% call detail.card('Usuarios') %}

@@ -37,35 +37,39 @@
 {% block custom_javascript %}
     <!-- Select Distrito-Autoridad -->
     <script>
-        // Llamar a /distritos/select_json para cargar el select distrito
-        fetch('/distritos/select_json')
+        const distritoSelect = document.getElementById('distrito');
+        const autoridadSelect = document.getElementById('autoridad');
+        // Cargar el select distrito
+        fetch('{{ url_for("distritos.select_json") }}')
             .then(response => response.json())
             .then(data => {
-                const distritoSelect = document.getElementById('distrito');
                 data.forEach(distrito => {
                     const option = document.createElement('option');
                     option.value = distrito.id;
-                    option.text = distrito.nombre;
+                    option.text = distrito.texto;
                     distritoSelect.appendChild(option);
                 });
                 // Seleccionar el distrito por defecto
-                document.getElementById('distrito').value = {{ distrito_por_defecto_id }};
-                document.getElementById('distrito').dispatchEvent(new Event('change'));
+                distritoSelect.value = '{{ distrito_no_definido_id }}';
+                distritoSelect.dispatchEvent(new Event('change'));
             });
-        // Llamar a /autoridades/select_json para cargar el select autoridad, si el distrito cambia
-        document.getElementById('distrito').addEventListener('change', () => {
-            const distritoId = document.getElementById('distrito').value;
-            fetch(`/autoridades/select_json/${distritoId}`)
+        // Cargar el select autoridad, si el distrito cambia
+        distritoSelect.addEventListener('change', () => {
+            const distritoId = distritoSelect.value;
+            fetch(`{{ url_for("autoridades.distrito_select_json", distrito_id="") }}${distritoId}`)
                 .then(response => response.json())
                 .then(data => {
-                    const autoridadSelect = document.getElementById('autoridad');
                     autoridadSelect.innerHTML = '';
                     data.forEach(autoridad => {
                         const option = document.createElement('option');
                         option.value = autoridad.id;
-                        option.text = autoridad.descripcion_corta;
+                        option.text = autoridad.texto;
                         autoridadSelect.appendChild(option);
                     });
+                    // Seleccionar la autoridad por defecto
+                    if (distritoSelect.value == '{{ distrito_no_definido_id }}') {
+                        autoridadSelect.value = '{{ autoridad_no_definida_id }}';
+                    }
                 });
         });
     </script>
