@@ -55,6 +55,7 @@
                     <th>Descripción</th>
                     <th>Descripción corta</th>
                     <th>Distrito</th>
+                    <th>Materia</th>
                     <th>Activo</th>
                 </tr>
             </thead>
@@ -77,6 +78,7 @@
             { data: "descripcion" },
             { data: "descripcion_corta" },
             { data: "distrito_clave" },
+            { data: "materia_clave" },
             { data: "toggle_es_activo" }
         ];
         configDTAutoridades['columnDefs'] = [
@@ -95,7 +97,7 @@
                 }
             },
             {
-                targets: 4, // toggle_es_activo
+                targets: 5, // toggle_es_activo
                 data: null,
                 render: function(data, type, row, meta) {
                     if (data.url === '') {
@@ -116,15 +118,6 @@
                 }
             }
         ];
-        // Cambiar las filas según toggle_es_activo
-        configDTAutoridades['createdRow'] = function(row, data, dataIndex) {
-            if (data.hasOwnProperty('toggle_es_activo')) {
-                // Cambiar el color de la fila si es_activo es false
-                if (!data.toggle_es_activo.es_activo) $(row).addClass('table-secondary');
-                // Asignar un id a la fila
-                $(row).attr('id', 'autoridad_row_' + data.toggle_es_activo.id);
-            }
-        };
         // Filtros autoridades
         const filtrosAutoridades = new FiltrosDataTable('#autoridades_datatable', configDTAutoridades);
         filtrosAutoridades.agregarInput('filtroAutoridadClave', 'clave');

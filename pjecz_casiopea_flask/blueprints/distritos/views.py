@@ -254,20 +254,12 @@ def recover(distrito_id):
 
 
 @distritos.route("/distritos/select_json", methods=["GET", "POST"])
-def query_distritos_json():
-    """Proporcionar el JSON de distritos para elegir con un Select"""
-    # Consultar
-    consulta = Distrito.query.filter_by(estatus="A").order_by(Distrito.nombre)
-    # Elaborar datos para Select
+def select_json():
+    """Proporcionar el JSON de distritos para elegir con un select"""
+    consulta = Distrito.query.filter_by(estatus="A").order_by(Distrito.clave)
     data = []
     for resultado in consulta.all():
-        data.append(
-            {
-                "id": resultado.id,
-                "nombre": resultado.nombre,
-            }
-        )
-    # Entregar JSON
+        data.append({"id": str(resultado.id), "texto": f"{resultado.clave}: {resultado.nombre}"})
     return json.dumps(data)
 
 

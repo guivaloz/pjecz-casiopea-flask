@@ -25,7 +25,7 @@ class OficinaForm(FlaskForm):
     es_jurisdiccional = BooleanField("Es Jurisdiccional", validators=[Optional()])
     puede_agendar_citas = BooleanField("Puede agendar citas", validators=[Optional()])
     puede_enviar_qr = BooleanField("Puede enviar códigos QR", validators=[Optional()])
-    es_activo = BooleanField("Activo", validators=[Optional()])
+    es_activo = BooleanField("Activo", validators=[Optional()], default=True)
     guardar = SubmitField("Guardar")
 
     def __init__(self, *args, **kwargs):

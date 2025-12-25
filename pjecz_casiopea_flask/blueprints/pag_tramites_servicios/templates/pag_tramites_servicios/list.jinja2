@@ -112,14 +112,14 @@
             }
         ];
         // Cambiar las filas según toggle_es_activo
-        configDTPagTramitesServicios['createdRow'] = function(row, data, dataIndex) {
-            if (data.hasOwnProperty('toggle_es_activo')) {
-                // Cambiar el color de la fila si es_activo es false
-                if (!data.toggle_es_activo.es_activo) $(row).addClass('table-secondary');
-                // Asignar un id a la fila
-                $(row).attr('id', 'pag_tramites_servicios_row_' + data.toggle_es_activo.id);
-            }
-        };
+        // configDTPagTramitesServicios['createdRow'] = function(row, data, dataIndex) {
+        //     if (data.hasOwnProperty('toggle_es_activo')) {
+        //         // Cambiar el color de la fila si es_activo es false
+        //         if (!data.toggle_es_activo.es_activo) $(row).addClass('table-secondary');
+        //         // Asignar un id a la fila
+        //         $(row).attr('id', 'pag_tramites_servicios_row_' + data.toggle_es_activo.id);
+        //     }
+        // };
         // Filtros PagTramitesServicios
         const filtrosPagTramitesServicios = new FiltrosDataTable('#pag_tramites_servicios_datatable', configDTPagTramitesServicios);
         filtrosPagTramitesServicios.agregarInput('filtroClave', 'clave');

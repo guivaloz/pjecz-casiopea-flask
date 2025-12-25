@@ -273,6 +273,16 @@ def recover(domicilio_id):
     return redirect(url_for("domicilios.detail", domicilio_id=domicilio.id))
 
 
+@domicilios.route("/domicilios/select_json", methods=["GET", "POST"])
+def select_json():
+    """Proporcionar el JSON de domicilios para elegir con un select"""
+    consulta = Domicilio.query.filter_by(estatus="A").order_by(Domicilio.clave)
+    data = []
+    for resultado in consulta.all():
+        data.append({"id": str(resultado.id), "texto": f"{resultado.clave}: {resultado.edificio}"})
+    return json.dumps(data)
+
+
 @domicilios.route("/domicilios/toggle_es_activo_json/<domicilio_id>", methods=["GET", "POST"])
 @permission_required(MODULO, Permiso.ADMINISTRAR)
 def toggle_es_activo_json(domicilio_id):

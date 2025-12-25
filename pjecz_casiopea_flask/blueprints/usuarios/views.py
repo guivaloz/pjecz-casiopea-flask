@@ -18,6 +18,7 @@ from ...lib.datatables import get_datatable_parameters, output_datatable_json
 from ...lib.pwgen import generar_contrasena
 from ...lib.safe_next_url import safe_next_url
 from ...lib.safe_string import CONTRASENA_REGEXP, EMAIL_REGEXP, TOKEN_REGEXP, safe_email, safe_message, safe_string, safe_uuid
+from ..autoridades.models import Autoridad
 from ..bitacoras.models import Bitacora
 from ..distritos.models import Distrito
 from ..entradas_salidas.models import EntradaSalida
@@ -367,16 +368,22 @@ def new():
             bitacora.save()
             flash(bitacora.descripcion, "success")
             return redirect(bitacora.url)
-    # Consultar el distrito por defecto con clave ND
-    distrito_por_defecto_id = 1
-    distrito_por_defecto = Distrito.query.filter_by(clave="ND").first()
-    if distrito_por_defecto is not None:
-        distrito_por_defecto_id = distrito_por_defecto.id
-    # Entregar
+    # Consultar el distrito NO DEFINIDO
+    distrito_no_definido_id = None
+    distrito_no_definido = Distrito.query.filter_by(clave="ND").first()
+    if distrito_no_definido:
+        distrito_no_definido_id = str(distrito_no_definido.id)  # Es un SelectField
+    # Consultar la autoridad NO DEFINIDO
+    autoridad_no_definida_id = None
+    autoridad_no_definida = Autoridad.query.filter_by(clave="ND").first()
+    if autoridad_no_definida:
+        autoridad_no_definida_id = str(autoridad_no_definida.id)  # Es un SelectField
+    # Entregar formulario
     return render_template(
         "usuarios/new.jinja2",
         form=form,
-        distrito_por_defecto_id=distrito_por_defecto_id,
+        distrito_no_definido_id=distrito_no_definido_id,
+        autoridad_no_definida_id=autoridad_no_definida_id,
     )
 
 
@@ -483,28 +490,23 @@ def recover(usuario_id):
 
 @usuarios.route("/usuarios/select_json", methods=["GET", "POST"])
 def select_json():
-    """Select JSON para Usuarios"""
-    # Consultar
-    consulta = Usuario.query.filter_by(estatus="A")
-    if "searchString" in request.form:
-        usuarios_email = safe_email(request.form["searchString"], search_fragment=True)
-        if usuarios_email != "":
-            consulta = consulta.filter(Usuario.email.contains(usuarios_email))
-    resultados = []
-    for usuario in consulta.order_by(Usuario.email).limit(20).all():
-        resultados.append({"id": usuario.email, "text": usuario.email, "nombre": usuario.nombre})
-    return {"results": resultados, "pagination": {"more": False}}
+    """Proporcionar el JSON de usuarios para elegir con un select"""
+    consulta = Usuario.query.filter_by(estatus="A").order_by(Usuario.email)
+    data = []
+    for resultado in consulta.all():
+        data.append({"id": str(resultado.id), "texto": resultado.email})
+    return json.dumps(data)
 
 
 @usuarios.route("/usuarios/select2_json", methods=["POST"])
 def select2_json():
-    """Proporcionar el JSON de usuarios para elegir con un Select2, se usa para filtrar en DataTables"""
+    """Proporcionar el JSON de usuarios para elegir con un Select2, puede recibir parte del email a buscar"""
     consulta = Usuario.query.filter(Usuario.estatus == "A")
     if "searchString" in request.form:
         email = safe_email(request.form["searchString"], search_fragment=True)
         if email != "":
             consulta = consulta.filter(Usuario.email.contains(email))
-    resultados = []
+    data = []
     for usuario in consulta.order_by(Usuario.email).limit(10).all():
-        resultados.append({"id": usuario.id, "text": f"{usuario.email}: {usuario.nombre}"})
-    return {"results": resultados, "pagination": {"more": False}}
+        data.append({"id": str(usuario.id), "text": f"{usuario.email}: {usuario.nombre}"})
+    return {"results": data, "pagination": {"more": False}}

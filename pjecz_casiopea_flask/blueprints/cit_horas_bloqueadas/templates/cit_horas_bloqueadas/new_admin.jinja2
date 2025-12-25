@@ -40,7 +40,7 @@
                 allowClear: true,
                 minimumInputLength: 4,
                 ajax: {
-                    url: '/oficinas/select_json',
+                    url: '{{ url_for("oficinas.select_json") }}',
                     headers: { "X-CSRF-TOKEN": "{{ csrf_token() }}" },
                     dataType: 'json',
                     delay: 250,

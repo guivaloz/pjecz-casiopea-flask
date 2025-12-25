@@ -66,6 +66,7 @@
                         <th>Clave</th>
                         <th>Descripción</th>
                         <th>Descripción corta</th>
+                        <th>Materia</th>
                         <th>Activo</th>
                     </tr>
                 </thead>
@@ -137,6 +138,7 @@
                 { data: "detalle" },
                 { data: "descripcion" },
                 { data: "descripcion_corta" },
+                { data: "materia_clave" },
                 { data: "toggle_es_activo" }
             ];
             configDTAutoridades['columnDefs'] = [
@@ -155,7 +157,7 @@
                     }
                 },
                 {
-                    targets: 3, // toggle_es_activo
+                    targets: 4, // toggle_es_activo
                     data: null,
                     render: function(data, type, row, meta) {
                         if (data.url === '') {
@@ -176,15 +178,6 @@
                     }
                 }
             ];
-            // Cambiar las filas según toggle_es_activo
-            configDTAutoridades['createdRow'] = function(row, data, dataIndex) {
-                if (data.hasOwnProperty('toggle_es_activo')) {
-                    // Cambiar el color de la fila si es_activo es false
-                    if (!data.toggle_es_activo.es_activo) $(row).addClass('table-secondary');
-                    // Asignar un id a la fila
-                    $(row).attr('id', 'autoridades_row_' + data.toggle_es_activo.id);
-                }
-            };
             // Filtros Autoridades
             const filtrosAutoridades = new FiltrosDataTable('#autoridades_datatable', configDTAutoridades);
             filtrosAutoridades.agregarInput('filtroAutoridadClave', 'clave');
@@ -245,15 +238,6 @@
                     }
                 }
             ];
-            // Cambiar las filas según toggle_es_activo
-            configDTOficinas['createdRow'] = function(row, data, dataIndex) {
-                if (data.hasOwnProperty('toggle_es_activo')) {
-                    // Cambiar el color de la fila si es_activo es false
-                    if (!data.toggle_es_activo.es_activo) $(row).addClass('table-secondary');
-                    // Asignar un id a la fila
-                    $(row).attr('id', 'oficinas_row_' + data.toggle_es_activo.id);
-                }
-            };
             // Filtros Oficinas
             const filtrosOficinas = new FiltrosDataTable('#oficinas_datatable', configDTOficinas);
             filtrosOficinas.agregarInput('filtroClave', 'clave');

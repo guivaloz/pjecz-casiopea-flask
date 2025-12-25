@@ -23,7 +23,7 @@ class CitServicioForm(FlaskForm):
     desde = TimeField("Horario de comienzo (horas:minutos)", validators=[Optional()])
     hasta = TimeField("Horario de término (horas:minutos)", validators=[Optional()])
     dias_habilitados = StringField("Días habilitados", validators=[Optional()])
-    es_activo = BooleanField("Activo", validators=[Optional()])
+    es_activo = BooleanField("Activo", validators=[Optional()], default=True)
     guardar = SubmitField("Guardar")
 
     def __init__(self, *args, **kwargs):

@@ -70,24 +70,6 @@ def datatable_json():
     return output_datatable_json(draw, total, data)
 
 
-@materias.route("/materias/select_json", methods=["GET", "POST"])
-def select_json():
-    """Select JSON para materias"""
-    # Consultar
-    consulta = Materia.query.filter_by(estatus="A").order_by(Materia.nombre)
-    # Elaborar datos para Select
-    data = []
-    for resultado in consulta.all():
-        data.append(
-            {
-                "id": resultado.id,
-                "nombre": resultado.nombre,
-            }
-        )
-    # Entregar JSON
-    return json.dumps(data)
-
-
 @materias.route("/materias")
 def list_active():
     """Listado de Materias activas"""
@@ -249,3 +231,16 @@ def recover(materia_id):
         bitacora.save()
         flash(bitacora.descripcion, "success")
     return redirect(url_for("materias.detail", materia_id=materia.id))
+
+
+@materias.route("/materias/select_json", methods=["GET", "POST"])
+def select_json():
+    """Proporcionar el JSON de materias para elegir con un select"""
+    # Consultar
+    consulta = Materia.query.filter_by(estatus="A").order_by(Materia.nombre)
+    # Elaborar datos para Select
+    data = []
+    for resultado in consulta.all():
+        data.append({"id": resultado.id, "nombre": resultado.nombre})
+    # Entregar JSON
+    return json.dumps(data)

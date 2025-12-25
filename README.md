@@ -20,22 +20,6 @@ DB_USER=adminpjeczcasiopea
 DB_PASS=XXXXXXXXXXXX
 SQLALCHEMY_DATABASE_URI="postgresql+psycopg2://adminpjeczcasiopea:XXXXXXXXXXXX@127.0.0.1:5432/pjecz_casiopea"
 
-# CLI migrar copiar: base de datos NUEVA pjecz_casiopea
-NEW_DB_HOST=
-NEW_DB_PORT=
-NEW_DB_NAME=
-NEW_DB_USER=
-NEW_DB_PASS=
-NEW_SQLALCHEMY_DATABASE_URI=
-
-# CLI migrar copiar: base de datos ANTERIOR pjecz_citas_v2
-OLD_DB_HOST=
-OLD_DB_PORT=
-OLD_DB_NAME=
-OLD_DB_USER=
-OLD_DB_PASS=
-OLD_SQLALCHEMY_DATABASE_URI=
-
 # Cryptography
 FERNET_KEY=XXXXXXXXXXXX
 SALT=XXXXXXXXXXXX
@@ -54,6 +38,7 @@ TZ=America/Mexico_City
 # Sendgrid
 SENDGRID_API_KEY=
 SENDGRID_FROM_EMAIL=
+SENDGRID_TO_EMAIL=
 
 # URLs de confirmación y de recuperación de cuenta
 NEW_ACCOUNT_CONFIRM_URL=
